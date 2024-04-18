@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit'
-import TicketSlic from "../FrontEnd/src/Slice/TicketSlic"
+import TicketSlic from "./Slice/TicketSlice"
 
 export const store = configureStore({
   reducer: {
