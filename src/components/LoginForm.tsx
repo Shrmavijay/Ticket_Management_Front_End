@@ -29,6 +29,7 @@ const LoginForm: React.FC<LoginFormProps> = ({checkLogin}) => {
         actions.resetForm();
            if(response.status == 200){
             localStorage.setItem('token', response.data.data.tokens);
+            localStorage.setItem('name', response.data.data.name);
             localStorage.setItem('id', response.data.data.id);
             Swal.fire({
               position: "center",
@@ -219,14 +220,16 @@ const LoginForm: React.FC<LoginFormProps> = ({checkLogin}) => {
             >
               Login
             </button>
-            <span>
-              New user? <Link to="/" className="text-blue-500">Register</Link>
-            </span>
+         
           </div>
         </form>
       )}
     </Formik>
+    <span>
+              New user? <Link to="/register" className="text-blue-500">Register</Link>
+            </span>
   </div>
+  
 </div>
 
   );

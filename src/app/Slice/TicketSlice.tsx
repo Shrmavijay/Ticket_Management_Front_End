@@ -32,7 +32,7 @@ export const createTicket = createAsyncThunk(
   "ticket/create",
   async (ticketData: any) => {
     const res = await axios.post(
-      `http://192.168.1.15:8080/api/tickets/create`,
+      `http://192.168.1.6:8080/api/tickets/create`,
       {...ticketData,user_id:id},
       {
         headers: {
@@ -47,7 +47,7 @@ export const createTicket = createAsyncThunk(
 
 
 export const getdata = createAsyncThunk("ticket", async () => {
-  const res = await axios.get("http://192.168.1.15:8080/api/tickets");
+  const res = await axios.get("http://192.168.1.6:8080/api/tickets");
   console.log(res.data.data);
   return res.data.data;
 });
@@ -57,7 +57,7 @@ export const editTicket = createAsyncThunk(
   "ticket/edit",
   async (ticketData: any) => {
     const res = await axios.put(
-      `http://192.168.1.15:8080/api/tickets/${ticketData.id}`,
+      `http://192.168.1.6:8080/api/tickets/${ticketData.id}`,
       ticketData,
       {
         headers: {
@@ -71,7 +71,7 @@ export const editTicket = createAsyncThunk(
 );
 
 export const deleteTicket = createAsyncThunk('ticket/delete', async (ticketId: any) => {
-  await axios.delete(`http://192.168.1.15:8080/api/tickets/${ticketId}`,{
+  await axios.delete(`http://192.168.1.6:8080/api/tickets/${ticketId}`,{
     headers: {
       authorization: token,
     },
@@ -80,11 +80,11 @@ export const deleteTicket = createAsyncThunk('ticket/delete', async (ticketId: a
 });
 
 export const loginUser = createAsyncThunk('user/login', async ()=>{
-  await axios.post('http://192.168.1.15:8080/api/users/login') 
+  await axios.post('http://192.168.1.6:8080/api/users/login') 
 })
 
 export const logoutUser = createAsyncThunk('user/logout', async () =>{
-  await axios.delete(`http://192.168.1.15:8080/api/users/${user_id}`,{
+  await axios.delete(`http://192.168.1.6:8080/api/users/${user_id}`,{
     headers: {
       authorization: token,
     },

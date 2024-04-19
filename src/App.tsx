@@ -27,11 +27,12 @@ function App() {
           {/* <Route path="/ticket" element={<TicketForm/>} /> */}
 
 
+         
 
         </Routes>
       ) : (
         <Routes>
-          <Route path="/" element={<HomePage />} />
+           <Route path="/" element={<HomePage />} />
         </Routes>
       )}
     </BrowserRouter>
