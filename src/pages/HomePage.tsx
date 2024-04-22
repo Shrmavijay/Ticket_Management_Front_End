@@ -59,9 +59,14 @@ import SideDrawer from '../components/SideDrawer.tsx';
 import TicketsPage from './TicketsPage.tsx';
 import { useAppDispatch } from '../hooks.tsx';
 import { getdata } from '../app/Slice/TicketSlice.tsx';
+import { stringAvatar } from '../utils/avatarUtils..ts';
 
 const HomePage: React.FC = () => {
   const dispatch = useAppDispatch()
+
+  // const name = localStorage.getItem('name')
+
+  // const AvatarProps = name && stringAvatar(name)
 
   dispatch(getdata())
   

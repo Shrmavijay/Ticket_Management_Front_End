@@ -4,6 +4,7 @@ import LoginForm from "./components/LoginForm";
 import {  useEffect, useState } from "react";
 // import HomePage from "./pages/HomePage";
 import HomePage from "./pages/HomePage";
+import { ClassNames } from "@emotion/react";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -17,7 +18,7 @@ function App() {
   useEffect(()=>{
     checkLogin()
   })
-  return (
+  return (<div className="sedan-regular">
     <BrowserRouter>
       {!isLogin ? (
         <Routes>
@@ -36,6 +37,7 @@ function App() {
         </Routes>
       )}
     </BrowserRouter>
+    </div>
   );
 }
 

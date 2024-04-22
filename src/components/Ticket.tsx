@@ -1,48 +1,77 @@
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
-// import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-// import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { Ticket as TicketInterFace} from './TicketForm';
+import TicketForm, { Ticket as TicketInterFace} from './TicketForm';
+import { useState } from 'react';
+import Dialog from '@mui/material/Dialog';
 
-// const bull = (
-//   <Box
-//     component="span"
-//     sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-//   >
-//     •
-//   </Box>
-// );
+
 
 interface TicketProps{
   ticket: TicketInterFace
+  ticketWidth: number
 }
 
-const Ticket:React.FC<TicketProps>=({ticket})=> {
-  console.log(ticket)
+
+
+
+
+
+
+
+
+
+
+
+const Ticket:React.FC<TicketProps>=({ticket, ticketWidth})=> {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleClick = () => {
+    setIsModalOpen(true)
+  };
+  
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
+
+  function getPriorityColor(priority:string) {
+    switch (priority.toLowerCase()) {
+      case 'low':
+        return 'text-blue-500'; 
+      case 'medium':
+        return 'text-yellow-500'; 
+      case 'high':
+        return 'text-red-500'; 
+      default:
+        return 'text-gray-500'; 
+    }
+  }
  return (
-    <Card sx={{ maxWidth: 200, maxHeight:100 }}>
+  <>
+    <Card sx={{ width: ticketWidth, minHeight:100,cursor:"pointer" }} onClick={handleClick}>
       <CardContent sx={{mt:0}}>
-        <Typography sx={{ fontSize: 14}} color="text.secondary" gutterBottom>
+        <Typography sx={{ fontSize: 10}} color="text.secondary" gutterBottom>
           {`#${ticket.id}-${ticket.title}`}
         </Typography>
-        <Typography variant="h6" component="div" fontSize={15}>
+        <Typography variant="h6" component="div" fontSize={13}>
           {`${ticket.description}`}
         </Typography>
-        <Typography sx={{fontSize:12, textAlign:'end'}} color="text.secondary">
-          {`${ticket.priority}  ${ticket.due_date}`}
+        <Typography sx={{fontSize:10, textAlign:'end', display:'flex', justifyContent:'space-between'}} color="text.secondary">
+          <span className={`${getPriorityColor(ticket.priority)}`}>{ticket.priority}</span>{ticket.due_date.toString().split("T")[0]}
         </Typography>
-        {/* <Typography variant="body2">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
-        </Typography> */}
+        <Typography sx={{fontSize:10, textAlign:'end', display:'flex', justifyContent:'flex-end'}} color="text.secondary">
+         {ticket.due_date.toString().split("T")[1].split(".")[0]}
+        </Typography>
+   
       </CardContent>
-      {/* <CardActions>
-        <Button size="small">Learn More</Button>
-      </CardActions> */}
+
     </Card>
+ 
+         <Dialog open={isModalOpen} onClose={handleCloseModal}>
+         <TicketForm tickets={ticket}/> 
+      </Dialog>
+        </>
   );
 }
 

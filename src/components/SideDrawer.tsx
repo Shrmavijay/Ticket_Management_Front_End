@@ -244,14 +244,18 @@ export default function SideDrawer() {
   const theme = useTheme();
   const [open, setOpen] = useState(true);
 
+  const [ticketWidth, setTicketWidth] = useState(200)
+
   const [sectionName, setSectionName] = useState("Basic board")
 
   const handleDrawerOpen = () => {
     setOpen(true);
+    setTicketWidth(200)
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
+    setTicketWidth(260)
   };
 
   const getName = (text: string)=>setSectionName(text)
@@ -270,6 +274,8 @@ export default function SideDrawer() {
             boxSizing: "border-box",
             backgroundColor: "#2c3e50",
             color: "white",
+            border:"none",
+            outline: "none"
           },
         }}
         variant="persistent"
@@ -318,7 +324,7 @@ export default function SideDrawer() {
             "Kanban board",
             "Kanban board task",
             "Work background structure",
-          ].map((text, index) => (
+          ].map((text) => (
             <ListItem button key={text} onClick={()=>getName(text)} sx={{ textAlign: "center" }}>
               <ListItemText primary={text} />
             </ListItem>
@@ -339,7 +345,7 @@ export default function SideDrawer() {
           ))}
         </List> */}
       </Drawer>
-      <Main open={open} sx={{marginTop:'3rem'}}><TicketsPage sectionName={sectionName}/></Main>
+      <Main open={open} sx={{marginTop:'3rem'}}><TicketsPage ticketWidth={ticketWidth} sectionName={sectionName}/></Main>
     
     </Box>
     </>

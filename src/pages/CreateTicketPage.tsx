@@ -12,17 +12,19 @@ interface Ticket {
 }
 
 const priorities = ['LOW', 'MEDIUM', 'HIGH'];
-const statuses = ['CREATED', 'IN_PROGRESS', 'COMPLETED'];
+const statuses = ['NEW', 'IN_PROGRESS', 'COMPLETED', 'REJECTED'];
 
-const CreateTicketPage: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ isOpen, onClose }) => {
+const CreateTicketPage: React.FC<{ status:string,isOpen: boolean; onClose: () => void }> = ({ status, isOpen, onClose }) => {
   const dispatch = useAppDispatch();
   const [ticket, setTicket] = useState<Ticket>({
     title: '',
     description: '',
     priority: 'LOW',
-    status: 'CREATED',
+    status: status,
     due_date: ''
   });
+
+  console.log(status)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;

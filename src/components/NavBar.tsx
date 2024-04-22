@@ -56,7 +56,7 @@ const NavBar:React.FC<NavBarProps>  = ({open, handleDrawerOpen}) => {
       };
   return (
     <>
-    <AppBar open={open} position="fixed" style={{ background: '#2c3e50' }}>
+    <AppBar open={open} position="fixed" style={{ background: '#2c3e50', border:'none', outline:'none'}}>
         <Toolbar>
 
         <IconButton

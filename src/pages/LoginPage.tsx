@@ -1,5 +1,5 @@
 import React from 'react';
-import TicketHome from './TicketHome';
+// import TicketHome from './TicketHome';
 import { AppBar, Toolbar, Typography, Button, Container, Grid } from '@mui/material';
 
 const LoginPage = () => {
@@ -17,7 +17,7 @@ const LoginPage = () => {
       <Container maxWidth="lg" className="py-8">
         <Grid container spacing={3}>
           <Grid item xs={12}>
-            <TicketHome />
+            {/* <TicketHome /> */}
           </Grid>
         </Grid>
       </Container>

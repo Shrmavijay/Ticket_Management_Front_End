@@ -8,43 +8,119 @@ import FormatBoldIcon from "@mui/icons-material/FormatBold";
 // import Ticket from "../components/Ticket";
 // import { useAppSelector } from "../hooks";
 import TicketTable from "../components/TicketTable";
-interface TicketsPage{
-    sectionName: string
+import { Button } from "@mui/material";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
+import { DropResult, DragDropContext, Droppable } from "react-beautiful-dnd";
+import { useAppDispatch, useAppSelector } from "../hooks";
+import { object } from "yup";
+import { Ticket } from "../components/TicketForm";
+import { editTicket } from "../app/Slice/TicketSlice";
+
+interface TicketsPage {
+  sectionName: string;
+  ticketWidth: number;
 }
-const TicketsPage:React.FC<TicketsPage>= ({sectionName}) => {
+const TicketsPage: React.FC<TicketsPage> = ({ sectionName, ticketWidth }) => {
+  const dispatch = useAppDispatch()
+  const status = ["NEW", "IN_PROGRESS", "COMPLETED", "REJECTED"];
 
+  const tickets = useAppSelector((state) => state.ticket.ticket);
+
+  const handleOnDragEnd = (result: DropResult) => {
+    console.log("drag result: ", result);
+    if (!result.destination) {
+      return;
+    }
+    const startIndex = result.source.index;
+    const endIndex = result.destination.index;
+    const dropPoint = result.destination.droppableId;
+    reorder(tickets, startIndex, endIndex, dropPoint);
+  };
+
+  const reorder = (
+    list: any[],
+    startIndex: number,
+    endIndex: number,
+    dropPoint: string
+  ) => {
+    let result = Array.from(list);
+    const [removed] = result.splice(startIndex, 1);
+    const updatedTicket = {...removed, status:dropPoint }
+    console.log('update: ', updatedTicket)
+    debugger;
+    result.splice(endIndex, 0, updatedTicket);
+    debugger;
+    dispatch(editTicket([updatedTicket ,result]))
+    return result;
+  };
+
+  const handleFilter = () => {};
   return (
-    <div>
-      <div className="flex justify-between">
-        <span>{sectionName}</span>
+    <DragDropContext onDragEnd={(result) => handleOnDragEnd(result)}>
+      <div>
+        <div className="flex justify-between">
+          <span className="self-center font-bold text-xl text-black/60">
+            {sectionName}
+          </span>
 
-        <Card                               //Sort and filter buttons
-          variant="outlined"
-          sx={{
-            display: "flex",
-            color: "text.secondary",
-            "& svg": {
-              m: 1,
-            },
-            "& hr": {
-              mx: 0.5,
-            },
-          }}
-        >
-          <FormatAlignLeftIcon />
+          <Card //Sort and filter buttons
+            variant="outlined"
+            sx={{
+              display: "flex",
+              color: "text.secondary",
+              "& svg": {
+                m: 1,
+              },
+              "& hr": {
+                mx: 0.5,
+              },
+            }}
+          >
+            <Button
+              variant="outlined"
+              onClick={handleFilter}
+              size="small"
+              sx={{ border: "black", color: "black" }}
+            >
+              <FilterAltIcon />
+              Filter
+            </Button>
+
+            {/* <FormatAlignLeftIcon />
           <FormatAlignCenterIcon />
           <FormatAlignRightIcon />
           <Divider orientation="vertical" variant="middle" flexItem />
-          <FormatBoldIcon />
-        </Card>
+          <FormatBoldIcon /> */}
+          </Card>
+        </div>
+        {/* <div className="flex gap-10 mt-7 justify-between"> */}
+
+        <div className="flex gap-10 mt-7 justify-between">
+          {status.map((status: string, index: React.Key | null | undefined) => (
+            <Droppable key={index} droppableId={`${status}`}>
+              {(provided) => (
+                <div 
+                ref={provided.innerRef}
+                {...provided.droppableProps}>
+
+                <TicketTable
+                  status={status}
+                  ticketWidth={ticketWidth}
+                  key={index}
+                  />  
+                  {provided.placeholder}
+                  </div>
+              )}
+            </Droppable>
+          ))}
+        </div>
+        {/* <TicketTable status={"NEW"} ticketWidth={ticketWidth} />
+      <TicketTable status={"IN_PROGRESS"} ticketWidth={ticketWidth}/>
+      <TicketTable status={"COMPLETED"} ticketWidth={ticketWidth}/>
+      <TicketTable status={"REJECTED"} ticketWidth={ticketWidth}/> */}
+        {/* </div> */}
       </div>
-      <div className="flex gap-10">
-      <TicketTable status={"New"} />
-      <TicketTable status={"In-Progress"}/>
-      <TicketTable status={"Completed"} />
-      <TicketTable status={"Rejected"} />
-      </div>
-    </div>
+    </DragDropContext>
   );
 };
 
