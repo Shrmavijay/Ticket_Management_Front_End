@@ -87,7 +87,7 @@ export const deleteTicket = createAsyncThunk(
 );
 
 export const loginUser = createAsyncThunk("user/login", async () => {
-  const response = await axios.post(`${baseURL}/api/users/login`);
+  await axios.post(`${baseURL}/api/users/login`);
   
 });
 
