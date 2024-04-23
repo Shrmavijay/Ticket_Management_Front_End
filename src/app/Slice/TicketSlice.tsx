@@ -45,7 +45,11 @@ export const createTicket = createAsyncThunk(
 );
 
 export const getdata = createAsyncThunk("ticket", async () => {
-  const res = await axios.get("http://192.168.1.10:8080/api/tickets");
+  const res = await axios.get("http://192.168.1.10:8080/api/tickets",{
+    headers: {
+      authorization: token,
+    },
+  });
   console.log(res.data.data);
   return res.data.data;
 });
@@ -53,7 +57,6 @@ export const getdata = createAsyncThunk("ticket", async () => {
 export const editTicket = createAsyncThunk(
   "ticket/edit",
   async (ticketData: any) => {
-    debugger;
     let rearragedList;
     if(Array.isArray(ticketData)){
       rearragedList = JSON.parse(JSON.stringify(ticketData[1]));
@@ -86,7 +89,8 @@ export const deleteTicket = createAsyncThunk(
 );
 
 export const loginUser = createAsyncThunk("user/login", async () => {
-  await axios.post("http://192.168.1.10:8080/api/users/login");
+  const response = await axios.post("http://192.168.1.10:8080/api/users/login");
+  
 });
 
 export const logoutUser = createAsyncThunk("user/logout", async () => {
@@ -103,8 +107,9 @@ export const TicketSlic = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(loginUser.fulfilled, (state) => {
+      .addCase(loginUser.fulfilled, (state,{payload}:any) => {
         state.isLogin = true;
+        state.ticket = payload
         return state;
       })
       .addCase(getdata.fulfilled, (state, action: PayloadAction<any>) => {
@@ -113,7 +118,6 @@ export const TicketSlic = createSlice({
 
       .addCase(editTicket.fulfilled, (state, action: PayloadAction<any>) => {
         state.error = null;
-        debugger;
         if (Array.isArray(action.payload)) {
           state.ticket = action.payload;
         } else {

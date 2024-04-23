@@ -13,17 +13,6 @@ interface TicketProps{
   ticketWidth: number
 }
 
-
-
-
-
-
-
-
-
-
-
-
 const Ticket:React.FC<TicketProps>=({ticket, ticketWidth})=> {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClick = () => {
@@ -35,6 +24,20 @@ const Ticket:React.FC<TicketProps>=({ticket, ticketWidth})=> {
   };
 
 
+  const formattedDate = new Date(ticket.due_date).toLocaleDateString('en-GB', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric'
+  });
+  // console.log(formattedDate)
+  const dateTime = new Date(ticket.due_date);
+  const formattedTime = dateTime.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true 
+  });
+  
+  // console.log(formattedTime);
   function getPriorityColor(priority:string) {
     switch (priority.toLowerCase()) {
       case 'low':
@@ -58,14 +61,13 @@ const Ticket:React.FC<TicketProps>=({ticket, ticketWidth})=> {
           {`${ticket.description}`}
         </Typography>
         <Typography sx={{fontSize:10, textAlign:'end', display:'flex', justifyContent:'space-between'}} color="text.secondary">
-          <span className={`${getPriorityColor(ticket.priority)}`}>{ticket.priority}</span>{ticket.due_date.toString().split("T")[0]}
+          <span className={`${getPriorityColor(ticket.priority)}`}>{ticket.priority}</span>
+          {formattedDate}
         </Typography>
         <Typography sx={{fontSize:10, textAlign:'end', display:'flex', justifyContent:'flex-end'}} color="text.secondary">
-         {ticket.due_date.toString().split("T")[1].split(".")[0]}
+         {formattedTime}
         </Typography>
-   
-      </CardContent>
-
+        </CardContent>
     </Card>
  
          <Dialog open={isModalOpen} onClose={handleCloseModal}>

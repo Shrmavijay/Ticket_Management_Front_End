@@ -4,7 +4,6 @@ import LoginForm from "./components/LoginForm";
 import {  useEffect, useState } from "react";
 // import HomePage from "./pages/HomePage";
 import HomePage from "./pages/HomePage";
-import { ClassNames } from "@emotion/react";
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -13,6 +12,8 @@ function App() {
     if(localStorage.getItem('token')){
       console.log(localStorage.getItem('token'))
       setIsLogin(true)
+    }else{
+      setIsLogin(false)
     }
   }
   useEffect(()=>{
@@ -26,6 +27,7 @@ function App() {
           <Route path="/register" element={<RegisterForm />} />
           {/* <Route path="/" element={<TicketTable />} /> */}
           {/* <Route path="/ticket" element={<TicketForm/>} /> */}
+          
 
 
          

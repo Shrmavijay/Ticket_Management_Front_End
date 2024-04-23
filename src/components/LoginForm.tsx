@@ -5,13 +5,15 @@ import MyfetchMiddleWare, { RequestOptions } from "../utils/api";
 import { ValuesType } from "./RegisterForm";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { useAppDispatch } from "../hooks";
+import { getdata } from "../app/Slice/TicketSlice";
 
 interface LoginFormProps{
   checkLogin: any;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({checkLogin}) => {
-  const navigate = useNavigate()
+  const dispatch = useAppDispatch()
   const initialValues = {
     email: "",
     password:""
@@ -38,7 +40,7 @@ const LoginForm: React.FC<LoginFormProps> = ({checkLogin}) => {
               showConfirmButton: false,
               timer: 2500
             });
-            checkLogin();
+            checkLogin();            
            } else{
               Swal.fire({
               position: "center",

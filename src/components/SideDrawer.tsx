@@ -244,18 +244,18 @@ export default function SideDrawer() {
   const theme = useTheme();
   const [open, setOpen] = useState(true);
 
-  const [ticketWidth, setTicketWidth] = useState(200)
+  const [ticketWidth, setTicketWidth] = useState(268)
 
   const [sectionName, setSectionName] = useState("Basic board")
 
   const handleDrawerOpen = () => {
     setOpen(true);
-    setTicketWidth(200)
+    setTicketWidth(268)
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
-    setTicketWidth(260)
+    setTicketWidth(326)
   };
 
   const getName = (text: string)=>setSectionName(text)
@@ -325,7 +325,7 @@ export default function SideDrawer() {
             "Kanban board task",
             "Work background structure",
           ].map((text) => (
-            <ListItem button key={text} onClick={()=>getName(text)} sx={{ textAlign: "center" }}>
+            <ListItem button key={text} onClick={()=>getName(text)} sx={{ textAlign: "left" }}>
               <ListItemText primary={text} />
             </ListItem>
           ))}

@@ -44,14 +44,14 @@ const TicketForm: React.FC<ticketFormProps> = ({tickets}) => {
 
   const handleSave = () => {
     setIsEditMode(false);
-    
     dispatch(editTicket(ticket))
+
   };
 
   const handleCancel = () => {
-    setIsEditMode(false);
-    // Reset ticket data to initial values or previous values
     console.log('Cancel edit');
+    setIsEditMode(false);
+
   };
 
   return (

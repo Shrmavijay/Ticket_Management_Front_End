@@ -47,14 +47,16 @@ const TicketsPage: React.FC<TicketsPage> = ({ sectionName, ticketWidth }) => {
     const [removed] = result.splice(startIndex, 1);
     const updatedTicket = {...removed, status:dropPoint }
     console.log('update: ', updatedTicket)
-    debugger;
     result.splice(endIndex, 0, updatedTicket);
-    debugger;
     dispatch(editTicket([updatedTicket ,result]))
     return result;
   };
 
-  const handleFilter = () => {};
+  const handleFilter = () => {
+    console.log("hello")
+
+  };
+
   return (
     <DragDropContext onDragEnd={(result) => handleOnDragEnd(result)}>
       <div>
@@ -86,16 +88,11 @@ const TicketsPage: React.FC<TicketsPage> = ({ sectionName, ticketWidth }) => {
               Filter
             </Button>
 
-            {/* <FormatAlignLeftIcon />
-          <FormatAlignCenterIcon />
-          <FormatAlignRightIcon />
-          <Divider orientation="vertical" variant="middle" flexItem />
-          <FormatBoldIcon /> */}
+      
           </Card>
         </div>
-        {/* <div className="flex gap-10 mt-7 justify-between"> */}
 
-        <div className="flex gap-10 mt-7 justify-between">
+        <div className="flex gap-2 mt-7 justify-between">
           {status.map((status: string, index: React.Key | null | undefined) => (
             <Droppable key={index} droppableId={`${status}`}>
               {(provided) => (
@@ -114,11 +111,7 @@ const TicketsPage: React.FC<TicketsPage> = ({ sectionName, ticketWidth }) => {
             </Droppable>
           ))}
         </div>
-        {/* <TicketTable status={"NEW"} ticketWidth={ticketWidth} />
-      <TicketTable status={"IN_PROGRESS"} ticketWidth={ticketWidth}/>
-      <TicketTable status={"COMPLETED"} ticketWidth={ticketWidth}/>
-      <TicketTable status={"REJECTED"} ticketWidth={ticketWidth}/> */}
-        {/* </div> */}
+ 
       </div>
     </DragDropContext>
   );

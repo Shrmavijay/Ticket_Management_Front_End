@@ -48,7 +48,7 @@ const TicketTable: React.FC<TicketTableProps> = ({ status, ticketWidth }) => {
   return (
     <>
       <div className="flex flex-col mt-2">
-        <div className={`w-full h-1 ${getStatusColor(status)}`}></div>
+        <div className={`w-{full} h-1 ${getStatusColor(status)}`}></div>
         <Box display="flex" flexDirection="column">
           <span className="text-xs">status</span>
           <span>{status}</span>
@@ -57,6 +57,7 @@ const TicketTable: React.FC<TicketTableProps> = ({ status, ticketWidth }) => {
           variant="outlined"
           onClick={handleOpenModal}
           sx={{
+            width:ticketWidth,
             borderColor: "rgba(0, 0, 0, 0.2)",
             boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
           }}
@@ -64,23 +65,7 @@ const TicketTable: React.FC<TicketTableProps> = ({ status, ticketWidth }) => {
           <AddIcon sx={{ color: "black" }} />
         </Button>
 
-        {/* original Code */}
-
-        {/* {tickets?.map((ticket, index) =>
-          ticket.status.toLowerCase() === status.toLowerCase() ? (
-            <Box
-              key={index}
-              className="mt-2"
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
-              }}
-            >
-              <Ticket ticket={ticket} ticketWidth={ticketWidth} />
-            </Box>
-          ) : null
-        )} */}
+   
 
         
                 {tickets?.map((ticket, index) =>
@@ -113,9 +98,7 @@ const TicketTable: React.FC<TicketTableProps> = ({ status, ticketWidth }) => {
                 
       </div>
       <Dialog open={isModalOpen} onClose={handleCloseModal}>
-        {/* <CreateTicketPage isOpen={true} onClose={function (): void {
-        throw new Error("Function not implemented.");
-      } }/> */}
+  
         <CreateTicketPage
           status={status}
           isOpen={true}
