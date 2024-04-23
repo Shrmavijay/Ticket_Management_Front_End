@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse, Method } from "axios";
+import environment from "../Constant";
 
 export interface RequestOptions extends AxiosRequestConfig {
   endPoint: string;
@@ -14,7 +15,7 @@ async function MyfetchMiddleWare({
   console.log("method:", method, "url:", endPoint, "options:", options);
   const methods: Method[] = ["get", "post", "put", "patch", "delete"];
 
-  const APIBase: string = "http://192.168.1.10:8080";
+  const APIBase: string = `${environment.IP_ADDRESS}:${environment.SERVER_PORT}`;
 
   const commonHeader: Record<string, string> = {
     "content-type": "application/json", // Corrected content type

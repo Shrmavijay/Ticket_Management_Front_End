@@ -1,7 +1,12 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import environment from "../../Constant";
+
+
+const baseURL = `${environment.IP_ADDRESS}:${environment.SERVER_PORT}`
 export const token = localStorage.getItem("token");
 export let user_id: any;
+
 if (localStorage.getItem("id") !== null) {
   user_id = localStorage.getItem("id");
 }
@@ -13,14 +18,7 @@ export interface ticketState {
   isLogin: boolean;
   error: string | null;
 }
-// export interface Ticket {
-//   id: number;
-//   title: string;
-//   description: string;
-//   priority: string;
-//   status: string;
-//   due_date: string;
-// }
+
 const initialState: ticketState = {
   ticket: [],
   isLogin: false,
@@ -31,7 +29,7 @@ export const createTicket = createAsyncThunk(
   "ticket/create",
   async (ticketData: any) => {
     const res = await axios.post(
-      `http://192.168.1.10:8080/api/tickets/create`,
+      `${baseURL}/api/tickets/create`,
       { ...ticketData, user_id: id },
       {
         headers: {
@@ -45,7 +43,7 @@ export const createTicket = createAsyncThunk(
 );
 
 export const getdata = createAsyncThunk("ticket", async () => {
-  const res = await axios.get("http://192.168.1.10:8080/api/tickets",{
+  const res = await axios.get(`${baseURL}/api/tickets`,{
     headers: {
       authorization: token,
     },
@@ -63,7 +61,7 @@ export const editTicket = createAsyncThunk(
       ticketData = ticketData[0]
     }
     const res = await axios.put(
-      `http://192.168.1.10:8080/api/tickets/${ticketData.id}`,
+      `${baseURL}/api/tickets/${ticketData.id}`,
       ticketData,
       {
         headers: {
@@ -79,7 +77,7 @@ export const editTicket = createAsyncThunk(
 export const deleteTicket = createAsyncThunk(
   "ticket/delete",
   async (ticketId: any) => {
-    await axios.delete(`http://192.168.1.10:8080/api/tickets/${ticketId}`, {
+    await axios.delete(`${baseURL}/api/tickets/${ticketId}`, {
       headers: {
         authorization: token,
       },
@@ -89,12 +87,12 @@ export const deleteTicket = createAsyncThunk(
 );
 
 export const loginUser = createAsyncThunk("user/login", async () => {
-  const response = await axios.post("http://192.168.1.10:8080/api/users/login");
+  const response = await axios.post(`${baseURL}/api/users/login`);
   
 });
 
 export const logoutUser = createAsyncThunk("user/logout", async () => {
-  await axios.delete(`http://192.168.1.10:8080/api/users/${user_id}`, {
+  await axios.delete(`${baseURL}/api/users/${user_id}`, {
     headers: {
       authorization: token,
     },

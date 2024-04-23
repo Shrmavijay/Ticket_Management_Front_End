@@ -17,6 +17,7 @@
     "@reduxjs/toolkit": "^2.2.3",
     "@types/react-beautiful-dnd": "^13.1.8",
     "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
     "formik": "^2.4.5",
     "react": "^18.2.0",
     "react-beautiful-dnd": "^13.1.1",
@@ -27,6 +28,7 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@types/node": "^20.12.7",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",
