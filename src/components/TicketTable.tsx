@@ -5,10 +5,7 @@ import { Box, Button, Dialog } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CreateTicketPage from "../pages/CreateTicketPage";
 import {
-  DragDropContext,
-  Droppable,
   Draggable,
-  DropResult,
 } from "react-beautiful-dnd";
 
 interface TicketTableProps {

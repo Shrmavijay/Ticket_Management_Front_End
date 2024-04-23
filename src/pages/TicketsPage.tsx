@@ -1,19 +1,10 @@
 import React from "react";
 import Card from "@mui/material/Card";
-import Divider from "@mui/material/Divider";
-import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
-import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
-import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
-import FormatBoldIcon from "@mui/icons-material/FormatBold";
-// import Ticket from "../components/Ticket";
-// import { useAppSelector } from "../hooks";
 import TicketTable from "../components/TicketTable";
 import { Button } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import { DropResult, DragDropContext, Droppable } from "react-beautiful-dnd";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { object } from "yup";
-import { Ticket } from "../components/TicketForm";
 import { editTicket } from "../app/Slice/TicketSlice";
 
 interface TicketsPage {
@@ -21,7 +12,7 @@ interface TicketsPage {
   ticketWidth: number;
 }
 const TicketsPage: React.FC<TicketsPage> = ({ sectionName, ticketWidth }) => {
-  const dispatch = useAppDispatch()
+  const dispatch = useAppDispatch();
   const status = ["NEW", "IN_PROGRESS", "COMPLETED", "REJECTED"];
 
   const tickets = useAppSelector((state) => state.ticket.ticket);
@@ -45,16 +36,15 @@ const TicketsPage: React.FC<TicketsPage> = ({ sectionName, ticketWidth }) => {
   ) => {
     let result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
-    const updatedTicket = {...removed, status:dropPoint }
-    console.log('update: ', updatedTicket)
+    const updatedTicket = { ...removed, status: dropPoint };
+    console.log("update: ", updatedTicket);
     result.splice(endIndex, 0, updatedTicket);
-    dispatch(editTicket([updatedTicket ,result]))
+    dispatch(editTicket([updatedTicket, result]));
     return result;
   };
 
   const handleFilter = () => {
-    console.log("hello")
-
+    console.log("hello");
   };
 
   return (
@@ -87,8 +77,6 @@ const TicketsPage: React.FC<TicketsPage> = ({ sectionName, ticketWidth }) => {
               <FilterAltIcon />
               Filter
             </Button>
-
-      
           </Card>
         </div>
 
@@ -96,22 +84,18 @@ const TicketsPage: React.FC<TicketsPage> = ({ sectionName, ticketWidth }) => {
           {status.map((status: string, index: React.Key | null | undefined) => (
             <Droppable key={index} droppableId={`${status}`}>
               {(provided) => (
-                <div 
-                ref={provided.innerRef}
-                {...provided.droppableProps}>
-
-                <TicketTable
-                  status={status}
-                  ticketWidth={ticketWidth}
-                  key={index}
-                  />  
+                <div ref={provided.innerRef} {...provided.droppableProps}>
+                  <TicketTable
+                    status={status}
+                    ticketWidth={ticketWidth}
+                    key={index}
+                  />
                   {provided.placeholder}
-                  </div>
+                </div>
               )}
             </Droppable>
           ))}
         </div>
- 
       </div>
     </DragDropContext>
   );

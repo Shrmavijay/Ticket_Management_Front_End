@@ -1,9 +1,8 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Field, ErrorMessage } from "formik";
 import { registrationValidationSchema } from "../utils/validationSchema";
-import MyfetchMiddleWare, { RequestOptions } from "../utils/api";
+import MyfetchMiddleWare from "../utils/api";
 import { Link, useNavigate } from "react-router-dom";
-import { findRenderedDOMComponentWithClass } from "react-dom/test-utils";
 import Swal from "sweetalert2";
 export interface ValuesType {
   name?: String;
@@ -12,12 +11,6 @@ export interface ValuesType {
   confirmPassword?: String;
 }
 const RegisterForm: React.FC = () => {
-  const initialValues = {
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-  };
 
   const navigate = useNavigate();
 

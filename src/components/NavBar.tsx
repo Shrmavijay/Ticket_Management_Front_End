@@ -5,7 +5,6 @@ import { useAppDispatch } from '../hooks';
 import { logoutUser } from '../app/Slice/TicketSlice';
 import MenuIcon from "@mui/icons-material/Menu";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import { useNavigate } from "react-router-dom";
 const drawerWidth = 240;
 
 interface NavBarProps{
@@ -42,7 +41,6 @@ const NavBar:React.FC<NavBarProps>  = ({open, handleDrawerOpen}) => {
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-  const navigate = useNavigate()
     const handleLogout = () => {
         dispatch(logoutUser());
         localStorage.clear()

@@ -1,19 +1,17 @@
 import React from "react";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik, Field, ErrorMessage } from "formik";
 import {loginValidationSchema} from "../utils/validationSchema";
-import MyfetchMiddleWare, { RequestOptions } from "../utils/api";
+import MyfetchMiddleWare from "../utils/api";
 import { ValuesType } from "./RegisterForm";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
-import { useAppDispatch } from "../hooks";
-import { getdata } from "../app/Slice/TicketSlice";
+
 
 interface LoginFormProps{
   checkLogin: any;
 }
 
 const LoginForm: React.FC<LoginFormProps> = ({checkLogin}) => {
-  const dispatch = useAppDispatch()
   const initialValues = {
     email: "",
     password:""
