@@ -15,7 +15,8 @@ async function MyfetchMiddleWare({
   console.log("method:", method, "url:", endPoint, "options:", options);
   const methods: Method[] = ["get", "post", "put", "patch", "delete"];
 
-  const APIBase: string = `${environment.IP_ADDRESS}:${environment.SERVER_PORT}`;
+  // const APIBase: string = `${environment.IP_ADDRESS}:${environment.SERVER_PORT}`;
+  const APIBase: string = `${environment.baseUrl}`;
 
   const commonHeader: Record<string, string> = {
     "content-type": "application/json", // Corrected content type

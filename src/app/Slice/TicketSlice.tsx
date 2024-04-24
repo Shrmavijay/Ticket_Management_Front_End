@@ -3,7 +3,7 @@ import axios from "axios";
 import environment from "../../Constant";
 
 
-const baseURL = `${environment.IP_ADDRESS}:${environment.SERVER_PORT}`
+const baseURL = `${environment.baseUrl}`
 export const token = localStorage.getItem("token");
 export let user_id: any;
 
