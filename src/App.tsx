@@ -4,14 +4,21 @@ import LoginForm from "./components/LoginForm";
 import {  useEffect, useState } from "react";
 // import HomePage from "./pages/HomePage";
 import HomePage from "./pages/HomePage";
+import { useAppDispatch } from "./hooks";
+import { getdata } from "./app/Slice/TicketSlice";
+import MyfetchMiddleWare from "./utils/api";
 
 function App() {
+  const dispatch = useAppDispatch()
   const [isLogin, setIsLogin] = useState(false);
   
-  const checkLogin = ()=>{
-    if(localStorage.getItem('token')){
+  const checkLogin = async()=>{
+    const token = localStorage.getItem('token')
+    if(token!==null && token!=='null'){
       console.log(localStorage.getItem('token'))
       setIsLogin(true)
+      dispatch(getdata())
+      // await MyfetchMiddleWare({endPoint:'api/tickets'})
     }else{
       setIsLogin(false)
     }

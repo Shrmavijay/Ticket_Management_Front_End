@@ -4,9 +4,7 @@ import { useAppSelector } from "../hooks";
 import { Box, Button, Dialog } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import CreateTicketPage from "../pages/CreateTicketPage";
-import {
-  Draggable,
-} from "react-beautiful-dnd";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 
 interface TicketTableProps {
   status: string;
@@ -14,13 +12,15 @@ interface TicketTableProps {
 }
 const TicketTable: React.FC<TicketTableProps> = ({ status, ticketWidth }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const tickets = useAppSelector((state) => state.ticket.ticket);
+  const tickets = useAppSelector((state) => state.ticket.ticket)
+  
+
   const handleOpenModal = () => {
-    setIsModalOpen(true); 
+    setIsModalOpen(true);
   };
 
   const handleCloseModal = () => {
-    setIsModalOpen(false); 
+    setIsModalOpen(false);
   };
 
   function getStatusColor(status: string) {
@@ -38,71 +38,123 @@ const TicketTable: React.FC<TicketTableProps> = ({ status, ticketWidth }) => {
     }
   }
 
- 
+  //   return (
+  //     <>
+  //       <div className="flex flex-col mt-2">
+  //         {/* <div className={`w-{full} h-1 ${getStatusColor(status)}`}></div>
+  //         <Box display="flex" flexDirection="column">
+  //           <span className="text-xs">status</span>
+  //           <span>{status}</span>
+  //         </Box>
+  //         <Button
+  //           variant="outlined"
+  //           onClick={handleOpenModal}
+  //           sx={{
+  //             width:ticketWidth,
+  //             borderColor: "rgba(0, 0, 0, 0.2)",
+  //             boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
+  //           }}
+  //         >
+  //           <AddIcon sx={{ color: "black" }} />
+  //         </Button> */}
 
-  
+  //                 {/* {tickets?.map((ticket, index) =>
+  //                   ticket.status.toLowerCase() === status.toLowerCase() ? (
+  //                     <Draggable
+  //                       key={ticket.id.toString()}
+  //                       draggableId={ticket.id.toString()}
+  //                       index={index}
+  //                     >
+  //                       {(provided) => (
+  //                         <Box
+  //                           key={index}
+  //                           className="mt-2"
+  //                           sx={{
+  //                             display: "flex",
+  //                             flexDirection: "column",
+  //                             boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
+  //                             ...provided.draggableProps.style,
+  //                           }}
+  //                           {...provided.draggableProps}
+  //                           {...provided.dragHandleProps}
+  //                           ref={provided.innerRef}
+  //                         >
+  //                           <Ticket ticket={ticket} ticketWidth={ticketWidth} />
+  //                         </Box>
+  //                       )}
+  //                     </Draggable>
+  //                   ) : null
+  //                 )} */}
+
+  //       </div>
+  //       <Dialog open={isModalOpen} onClose={handleCloseModal}>
+
+  //         <CreateTicketPage
+  //           status={status}
+  //           isOpen={true}
+  //           onClose={handleCloseModal}
+  //         />
+  //       </Dialog>
+
+  //     </>
+  //   );
+  // };
 
   return (
     <>
-      <div className="flex flex-col mt-2">
+      <div className="flex flex-col mt-2" style={{width:ticketWidth}}>
         <div className={`w-{full} h-1 ${getStatusColor(status)}`}></div>
         <Box display="flex" flexDirection="column">
-          <span className="text-xs">status</span>
+          {/* <span className="text-xs">status</span> */}
           <span>{status}</span>
         </Box>
-        <Button
+        {/* <Button
           variant="outlined"
           onClick={handleOpenModal}
           sx={{
-            width:ticketWidth,
+            width: ticketWidth,
             borderColor: "rgba(0, 0, 0, 0.2)",
             boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
           }}
         >
           <AddIcon sx={{ color: "black" }} />
-        </Button>
+        </Button> */}
 
-   
-
-        
-                {tickets?.map((ticket, index) =>
-                  ticket.status.toLowerCase() === status.toLowerCase() ? (
-                    <Draggable
-                      key={ticket.id.toString()}
-                      draggableId={ticket.id.toString()}
-                      index={index}
-                    >
-                      {(provided) => (
-                        <Box
-                          key={index}
-                          className="mt-2"
-                          sx={{
-                            display: "flex",
-                            flexDirection: "column",
-                            boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
-                            ...provided.draggableProps.style,
-                          }}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                          ref={provided.innerRef}
-                        >
-                          <Ticket ticket={ticket} ticketWidth={ticketWidth} />
-                        </Box>
-                      )}
-                    </Draggable>
-                  ) : null
-                )}
-                
+        {tickets?.map((ticket, index) =>
+          ticket.status.toLowerCase() === status.toLowerCase() ? (
+            <Draggable
+              key={ticket.id.toString()}
+              draggableId={ticket.id.toString()}
+              index={index}
+            >
+              {(provided) => (
+                <Box
+                  key={index}
+                  className="mt-6"
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
+                    ...provided.draggableProps.style,
+                  }}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                  ref={provided.innerRef}
+                >
+                  <Ticket ticket={ticket} ticketWidth={ticketWidth} />
+                </Box>
+              )}
+            </Draggable>
+          ) : null
+        )}
       </div>
       <Dialog open={isModalOpen} onClose={handleCloseModal}>
-  
         <CreateTicketPage
-          status={status}
+          // status={status}
           isOpen={true}
           onClose={handleCloseModal}
         />
       </Dialog>
-    
     </>
   );
 };

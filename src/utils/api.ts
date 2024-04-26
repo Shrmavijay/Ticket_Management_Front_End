@@ -1,11 +1,14 @@
-import axios, { AxiosRequestConfig, AxiosResponse, Method } from "axios";
+import axios, { Axios, AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse, Method } from "axios";
 import environment from "../Constant";
 
 export interface RequestOptions extends AxiosRequestConfig {
   endPoint: string;
   method?: Method | string;
-  options: any;
+  options?: any;
 }
+const token = String(localStorage.getItem('token'))
+const id = Number(localStorage.getItem('id'))
+
 
 async function MyfetchMiddleWare({
   endPoint,
@@ -20,10 +23,12 @@ async function MyfetchMiddleWare({
 
   const commonHeader: Record<string, string> = {
     "content-type": "application/json", // Corrected content type
+    // aurthorization: token
   };
+  console.log('user_ID: ', id, 'token: ', token)
 
   const CommonBody: Record<string, any> = {
-    userID: 123,
+    // userID: id,
   };
 
   let baseUrl = `${APIBase}/${endPoint}`;
@@ -33,16 +38,16 @@ async function MyfetchMiddleWare({
   } else {
     options = { headers: { ...commonHeader }, data: { ...CommonBody } };
   }
-
   if (JSON.stringify(options.data)) {
     if (methods.includes(method.toLowerCase() as Method)) {
       try {
         const responseData = await (
           axios[method.toLowerCase() as keyof typeof axios] as (
             url: string,
-            config?: AxiosRequestConfig
+            data: AxiosRequestConfig,
+            config?: AxiosRequestHeaders
           ) => Promise<AxiosResponse>
-        )(baseUrl, options);
+        )(baseUrl, options.data,options.headers);
         console.log("Response: ", responseData);
         return responseData;
       } catch (error) {

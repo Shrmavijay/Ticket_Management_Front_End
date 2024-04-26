@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { TextField, Modal, Card, CardContent, CardActions, Button, MenuItem } from '@mui/material';
 import { useAppDispatch } from '../hooks';
 import { createTicket } from '../app/Slice/TicketSlice';
+import MyfetchMiddleWare from '../utils/api';
 
 interface Ticket {
   title: string;
@@ -14,17 +15,17 @@ interface Ticket {
 const priorities = ['LOW', 'MEDIUM', 'HIGH'];
 const statuses = ['NEW', 'IN_PROGRESS', 'COMPLETED', 'REJECTED'];
 
-const CreateTicketPage: React.FC<{ status:string,isOpen: boolean; onClose: () => void }> = ({ status, isOpen, onClose }) => {
+const CreateTicketPage: React.FC<{ isOpen: boolean; onClose: () => void }> = ({  isOpen, onClose }) => {
   const dispatch = useAppDispatch();
   const [ticket, setTicket] = useState<Ticket>({
     title: '',
     description: '',
     priority: 'LOW',
-    status: status,
+    status: "NEW",
     due_date: ''
   });
 
-  console.log(status)
+  console.log("status in ticket creation: ",ticket.status)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -34,8 +35,13 @@ const CreateTicketPage: React.FC<{ status:string,isOpen: boolean; onClose: () =>
     }));
   };
 
-  const handleCreateTicket = () => {
-    dispatch(createTicket(ticket));
+  const handleCreateTicket = async() => {
+    
+    console.log("userID: ", localStorage.getItem('id'))
+    const id = localStorage.getItem('id')
+    const user_id = Number(id)
+    dispatch(createTicket({...ticket,user_id}));
+    // await MyfetchMiddleWare({method:'post',endPoint: 'api/tickets/create',options:{data:ticket}})
     // Clear form fields after creating ticket
     setTicket({
       title: '',
@@ -44,12 +50,12 @@ const CreateTicketPage: React.FC<{ status:string,isOpen: boolean; onClose: () =>
       status: 'NEW',
       due_date: ''
     });
-    onClose(); // Close the modal
+    onClose(); 
   };
 
   return (
     <Modal open={isOpen} onClose={onClose}>
-      <Card sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 300 }}>
+      <Card sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 471 }}>
         <CardContent>
           <TextField
             fullWidth
@@ -111,7 +117,7 @@ const CreateTicketPage: React.FC<{ status:string,isOpen: boolean; onClose: () =>
             }}
           />
         </CardContent>
-        <CardActions>
+        <CardActions sx={{padding: "16px"}}>
           <Button variant="contained" onClick={handleCreateTicket}>Create</Button>
           <Button variant="contained" onClick={onClose}>Cancel</Button>
         </CardActions>

@@ -51,7 +51,7 @@ const Ticket:React.FC<TicketProps>=({ticket, ticketWidth})=> {
   }
  return (
   <>
-    <Card sx={{ width: ticketWidth, minHeight:100,cursor:"pointer" }} onClick={handleClick}>
+    <Card sx={{ width: ticketWidth, minHeight:100, cursor:"pointer" }} onClick={handleClick}>
       <CardContent sx={{mt:0}}>
         <Typography sx={{ fontSize: 10}} color="text.secondary" gutterBottom>
           {`#${ticket.id}-${ticket.title}`}

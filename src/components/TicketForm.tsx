@@ -55,7 +55,7 @@ const TicketForm: React.FC<ticketFormProps> = ({tickets}) => {
   };
 
   return (
-    <Card sx={{ maxWidth: 300 }}>
+    <Card sx={{ maxWidth: 471 }}>
       <CardContent>
         <TextField
           fullWidth
@@ -122,7 +122,7 @@ const TicketForm: React.FC<ticketFormProps> = ({tickets}) => {
           }}
         />
       </CardContent>
-      <CardActions>
+      <CardActions sx={{padding:"16px"}}>
         {isEditMode ? (
           <>
             <Button variant="contained" onClick={handleSave}>Save</Button>

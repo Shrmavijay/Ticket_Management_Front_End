@@ -47,22 +47,22 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function SideDrawer() {
   const [open, setOpen] = useState(true);
 
-  const [ticketWidth, setTicketWidth] = useState(268)
+  const [ticketWidth, setTicketWidth] = useState(240)
 
   const [sectionName, setSectionName] = useState("Basic board")
 
   const handleDrawerOpen = () => {
     setOpen(true);
-    setTicketWidth(268)
+    setTicketWidth(240)
   };
 
   const handleDrawerClose = () => {
     setOpen(false);
-    setTicketWidth(326)
+    setTicketWidth(298)
   };
 
   const getName = (text: string)=>setSectionName(text)
-
+  
   return (
   <>
     <Box sx={{ display: "flex" }}>
