@@ -6,7 +6,6 @@ import {  useEffect, useState } from "react";
 import HomePage from "./pages/HomePage";
 import { useAppDispatch } from "./hooks";
 import { getdata } from "./app/Slice/TicketSlice";
-import MyfetchMiddleWare from "./utils/api";
 
 function App() {
   const dispatch = useAppDispatch()
