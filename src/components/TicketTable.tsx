@@ -1,27 +1,25 @@
-import React, { useState } from "react";
+import React from "react";
 import Ticket from "./Ticket";
 import { useAppSelector } from "../hooks";
-import { Box, Button, Dialog } from "@mui/material";
-import AddIcon from "@mui/icons-material/Add";
-import CreateTicketPage from "../pages/CreateTicketPage";
-import { Draggable, Droppable } from "react-beautiful-dnd";
+import { Box } from "@mui/material";
+import { Draggable } from "react-beautiful-dnd";
 
 interface TicketTableProps {
   status: string;
   ticketWidth: number;
 }
 const TicketTable: React.FC<TicketTableProps> = ({ status, ticketWidth }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [isModalOpen, setIsModalOpen] = useState(false);
   const tickets = useAppSelector((state) => state.ticket.ticket)
   
 
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
+  // const handleOpenModal = () => {
+  //   setIsModalOpen(true);
+  // };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
+  // const handleCloseModal = () => {
+  //   setIsModalOpen(false);
+  // };
 
   function getStatusColor(status: string) {
     switch (status.toLowerCase()) {
@@ -148,13 +146,13 @@ const TicketTable: React.FC<TicketTableProps> = ({ status, ticketWidth }) => {
           ) : null
         )}
       </div>
-      <Dialog open={isModalOpen} onClose={handleCloseModal}>
+      {/* <Dialog open={isModalOpen} onClose={handleCloseModal}>
         <CreateTicketPage
           // status={status}
           isOpen={true}
           onClose={handleCloseModal}
         />
-      </Dialog>
+      </Dialog> */}
     </>
   );
 };

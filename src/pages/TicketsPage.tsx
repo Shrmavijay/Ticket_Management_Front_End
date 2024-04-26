@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import TicketTable from "../components/TicketTable";
-import { Avatar, Box, Button, Dialog, Divider, IconButton, ListItemIcon, Menu, MenuItem, Tooltip, Typography } from "@mui/material";
+import { Button, Dialog } from "@mui/material";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import {
   DropResult,
   DragDropContext,
   Droppable,
-  Draggable,
 } from "react-beautiful-dnd";
 import { useAppDispatch, useAppSelector } from "../hooks";
-import { editTicket, updateTickets } from "../app/Slice/TicketSlice";
-import { PersonAdd, Settings, Logout } from "@mui/icons-material";
+import { updateTickets } from "../app/Slice/TicketSlice";
 import AddIcon from "@mui/icons-material/Add";
 import CreateTicketPage from "./CreateTicketPage";
 import MyfetchMiddleWare from "../utils/api";
@@ -27,7 +25,7 @@ const TicketsPage: React.FC<TicketsPage> = ({ sectionName, ticketWidth }) => {
   const status = ["NEW", "IN_PROGRESS", "COMPLETED", "REJECTED"]
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [isOpen, setIsOpen] = useState(false);
+  // const [isOpen, setIsOpen] = useState(false);
 
   const tickets = useAppSelector((state) => state.ticket.ticket);
 
@@ -36,23 +34,23 @@ const TicketsPage: React.FC<TicketsPage> = ({ sectionName, ticketWidth }) => {
     if (!result.destination) {
       return;
     }
-    const startIndex = result.source.index;
+    // const startIndex = result.source.index;
     const endIndex = result.destination.index;
     const dropPoint = result.destination.droppableId;
     const ticketId = result.draggableId;
-    reorder(tickets, startIndex, endIndex, dropPoint, ticketId);
+    reorder(tickets, endIndex, dropPoint, ticketId);
   };
 
   const reorder = async(
     list: any[],
-    startIndex: number,
+    // startIndex: number,
     endIndex: number,
     dropPoint: string,
     ticketId: string
   ) => {
     let result = Array.from(list);
     const [ticket] = result.filter((element) => element.id == ticketId);
-    const [removed] = result.splice(startIndex, 1);
+    // const [removed] = result.splice(startIndex, 1);
     const updatedTicket = { ...ticket, status: dropPoint };
     console.log("update: ", updatedTicket);
     result.splice(endIndex, 0, updatedTicket);
@@ -83,16 +81,16 @@ const TicketsPage: React.FC<TicketsPage> = ({ sectionName, ticketWidth }) => {
     setIsModalOpen(false);
   };
 
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
-  const handleClose = () => {
-    setIsOpen(false);
-  };
+  // const handleOpen = () => {
+  //   setIsOpen(true);
+  // };
+  // const handleClose = () => {
+  //   setIsOpen(false);
+  // };
 
   const handleFilter = () => {
     console.log("hello");
-    handleOpen();
+    // handleOpen();
   };
 
   //   return (

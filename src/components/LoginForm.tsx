@@ -6,18 +6,10 @@ interface LoginFormProps {
 
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { ErrorMessage, Formik } from "formik";
-import Swal from "sweetalert2";
+// import { createTheme } from "@mui/material/styles";
+import { Formik } from "formik";
 import MyfetchMiddleWare from "../utils/api";
 import * as Yup from "yup";
 import "./loginform.css";
@@ -31,10 +23,10 @@ const registrationValidationSchema = Yup.object().shape({
     .required("Password is required"),
 });
 
-const defaultTheme = createTheme();
-interface LoginFormProps {
-  checkLogin: any;
-}
+// const defaultTheme = createTheme();
+// interface LoginFormProps {
+//   checkLogin: any;
+// }
 const LoginForm: React.FC<LoginFormProps> = ({ checkLogin }) => {
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
@@ -46,7 +38,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ checkLogin }) => {
         const userData = {
           method: "POST",
           endPoint: "api/users/login",
-          options: { ...values },
+          options: { data: {...values} },
         };
         const response = await MyfetchMiddleWare(userData);
         console.log(response, "response");
@@ -54,7 +46,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ checkLogin }) => {
           localStorage.setItem("token", response.data.data.tokens);
           localStorage.setItem("name", response.data.data.name);
           localStorage.setItem("id", response.data.data.id);
-          console.log("TOken set");
+          console.log("Token set");
           actions.resetForm();
           checkLogin();
           navigate("/");

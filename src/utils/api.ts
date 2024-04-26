@@ -1,4 +1,4 @@
-import axios, { Axios, AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse, Method } from "axios";
+import axios, {  AxiosRequestConfig, AxiosRequestHeaders, AxiosResponse, Method } from "axios";
 import environment from "../Constant";
 
 export interface RequestOptions extends AxiosRequestConfig {

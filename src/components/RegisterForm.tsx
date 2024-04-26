@@ -503,18 +503,10 @@ import { Link, useNavigate } from "react-router-dom";
 //   );
 // }
 
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
-import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { ErrorMessage, Formik } from "formik";
-import Swal from "sweetalert2";
+// import { createTheme } from "@mui/material/styles";
+import { Formik } from "formik";
 import MyfetchMiddleWare from "../utils/api";
 // import { registrationValidationSchema } from "../utils/validationSchema";
 import * as Yup from "yup"; // Import Yup
@@ -533,7 +525,7 @@ const registrationValidationSchema = Yup.object().shape({
     .required("Confirm password is required"),
 });
 
-const defaultTheme = createTheme();
+// const defaultTheme = createTheme();
 
 export default function RegisterForm() {
   const [isRegister, setIsRegister] = useState(false);

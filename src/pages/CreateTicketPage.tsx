@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { TextField, Modal, Card, CardContent, CardActions, Button, MenuItem } from '@mui/material';
 import { useAppDispatch } from '../hooks';
 import { createTicket } from '../app/Slice/TicketSlice';
-import MyfetchMiddleWare from '../utils/api';
 
 interface Ticket {
   title: string;
