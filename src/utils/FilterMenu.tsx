@@ -77,7 +77,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
   const [expanded, setExpanded] = useState<string | false>("panel1");
   // const users = useAppSelector((state) => state.ticket.users);
   const toggleMenu =
-    (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+    (panel: string) => (_event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false);
     };
 
