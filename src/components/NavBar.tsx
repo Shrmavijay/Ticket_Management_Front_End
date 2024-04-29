@@ -61,9 +61,9 @@ const NavBar: React.FC<NavBarProps> = ({ open, handleDrawerOpen }) => {
     window.location.reload();
   };
 
-  const handleProfile = () => {
-    handleClose();
-  };
+  // const handleProfile = () => {
+  //   handleClose();
+  // };
 
   const handleClose = () => {
     setAnchorEl(null);

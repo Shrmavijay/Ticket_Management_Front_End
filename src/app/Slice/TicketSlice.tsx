@@ -144,15 +144,15 @@ export const TicketSlic = createSlice({
       return state
     }
   },
-  toggleSelection(state:any,{payload}: any){
-    state.users.map((user: any)=>{
-      if(user.name == payload.name){
-        user.isSelected = payload.isSelected
-      }
-      return user
-    })
-    return state
-  },
+  // toggleSelection(state:any,{payload}: any){
+  //   state.users.map((user: any)=>{
+  //     if(user.name == payload.name){
+  //       user.isSelected = payload.isSelected
+  //     }
+  //     return user
+  //   })
+  //   return state
+  // },
   // Extra reducers
   extraReducers(builder) {
     builder
@@ -207,6 +207,6 @@ export const TicketSlic = createSlice({
       });
   },
 });
-export const { updateTickets, filterTickets, toggleSelection } = TicketSlic.actions;
+export const { updateTickets, filterTickets } = TicketSlic.actions;
 
 export default TicketSlic.reducer;

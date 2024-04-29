@@ -14,16 +14,14 @@ import {
   FormControlLabel,
   Radio,
   RadioGroup,
-  Checkbox,
-  FormGroup,
 } from "@mui/material";
 import { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../hooks";
-import { filterTickets, toggleSelection } from "../app/Slice/TicketSlice";
+import { useAppDispatch } from "../hooks";
+import { filterTickets } from "../app/Slice/TicketSlice";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
+))(() => ({
   "&:not(:last-child)": {
     borderBottom: 0,
   },
@@ -77,7 +75,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const [expanded, setExpanded] = useState<string | false>("panel1");
-  const users = useAppSelector((state) => state.ticket.users);
+  // const users = useAppSelector((state) => state.ticket.users);
   const toggleMenu =
     (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false);
@@ -167,7 +165,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
         <AccordionDetails>
           <FormControl
             onChange={(e) => {
-              setByPriority(e.target.value);
+              // setByPriority(e.target.value);
               handleFilter(e);
             }}
           >
