@@ -14,7 +14,7 @@ import MyfetchMiddleWare from "../utils/api";
 import * as Yup from "yup";
 import "./loginform.css";
 import { useState } from "react";
-import Loader from "../utils/Loader";
+import Loader from "../utils/LoginLoader";
 
 const registrationValidationSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),

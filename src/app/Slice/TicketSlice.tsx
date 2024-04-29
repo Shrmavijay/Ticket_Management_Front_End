@@ -15,14 +15,19 @@ const baseURL = `${environment.baseUrl}`;
 // Initial State interface
 export interface ticketState {
   userId?: number;
+  users?: string[];
   authToken?: string;
+  isLoading: boolean;
   ticket: any[];
+  filteredTickets?: any[]
   error: string | null;
 }
 
 //Initial State
 
 const initialState: ticketState = {
+  isLoading:false,
+  users:[],
   ticket: [],
   error: "",
 };
@@ -54,8 +59,8 @@ export const getdata = createAsyncThunk("ticket", async () => {
       authorization: token,
     },
   });
-  console.log(res.data.data);
-  return res.data.data;
+  console.log(res.data);
+  return res.data;
 });
 
 // Edit Ticket
@@ -133,7 +138,20 @@ export const TicketSlic = createSlice({
         ticket.id === payload.id ? payload : ticket
         )
       return state;
-    }     
+    },  
+    filterTickets(state,action){
+      state.filteredTickets = action.payload
+      return state
+    }
+  },
+  toggleSelection(state:any,{payload}: any){
+    state.users.map((user: any)=>{
+      if(user.name == payload.name){
+        user.isSelected = payload.isSelected
+      }
+      return user
+    })
+    return state
   },
   // Extra reducers
   extraReducers(builder) {
@@ -143,8 +161,19 @@ export const TicketSlic = createSlice({
         state.ticket = payload;
         return state;
       })
+      .addCase(getdata.pending, (state)=>{
+         state.isLoading = true
+         return state
+      })
       .addCase(getdata.fulfilled, (state, action: PayloadAction<any>) => {
-        (state.error = null), (state.ticket = action.payload);
+        state.isLoading = false;
+        state.error = null;
+        state.ticket = action.payload.data;
+        // state.users= action.payload.userName
+        state.users = action.payload.userName.map((user: any)=>{
+          return {...user,isSelected:false}
+        })
+        return state
       })
 
       .addCase(editTicket.fulfilled, (state, action: PayloadAction<any>) => {
@@ -178,6 +207,6 @@ export const TicketSlic = createSlice({
       });
   },
 });
-export const { updateTickets } = TicketSlic.actions;
+export const { updateTickets, filterTickets, toggleSelection } = TicketSlic.actions;
 
 export default TicketSlic.reducer;

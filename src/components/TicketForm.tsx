@@ -17,7 +17,7 @@ interface ticketFormProps{
     tickets: Ticket
 }
 const priorities = ['LOW', 'MEDIUM', 'HIGH'];
-const statuses = ['NEW', 'IN_PROGRESS', 'COMPLETED', "REJECTED"];
+const statuses = ["TODO", "PROGRESS", "DONE", "CANCELLED"];
 
 const TicketForm: React.FC<ticketFormProps> = ({tickets}) => {
 

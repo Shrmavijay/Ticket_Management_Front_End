@@ -1,15 +1,26 @@
-import { Toolbar, Typography, IconButton, Avatar, Menu, MenuItem, styled } from '@mui/material'
-import React, { useState } from 'react'
+import {
+  Toolbar,
+  Typography,
+  IconButton,
+  Avatar,
+  Menu,
+  MenuItem,
+  styled,
+  Divider,
+  ListItemIcon,
+} from "@mui/material";
+import React, { useState } from "react";
 import { stringAvatar } from "../utils/avatarUtils.";
-import { useAppDispatch } from '../hooks';
-import { logoutUser } from '../app/Slice/TicketSlice';
+import { useAppDispatch } from "../hooks";
+import { logoutUser } from "../app/Slice/TicketSlice";
 import MenuIcon from "@mui/icons-material/Menu";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
+import { Settings, Logout } from "@mui/icons-material";
 const drawerWidth = 240;
 
-interface NavBarProps{
+interface NavBarProps {
   open: boolean;
-  handleDrawerOpen: any
+  handleDrawerOpen: any;
 }
 
 interface AppBarProps extends MuiAppBarProps {
@@ -33,34 +44,39 @@ const AppBar = styled(MuiAppBar, {
   }),
 }));
 
-const NavBar:React.FC<NavBarProps>  = ({open, handleDrawerOpen}) => {
-    const dispatch = useAppDispatch();
-    const name = localStorage.getItem('name')
-    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+const NavBar: React.FC<NavBarProps> = ({ open, handleDrawerOpen }) => {
+  const dispatch = useAppDispatch();
+  const name = localStorage.getItem("name");
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const openAccountMenu = Boolean(anchorEl);
+
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
-    const handleLogout = () => {
-        dispatch(logoutUser());
-        localStorage.clear()
-        handleClose()
-        window.location.reload();
-      };
+  const handleLogout = () => {
+    dispatch(logoutUser());
+    localStorage.clear();
+    handleClose();
+    window.location.reload();
+  };
 
-      const handleProfile = () => {
-        handleClose();
-      };
+  const handleProfile = () => {
+    handleClose();
+  };
 
-      const handleClose = () => {
-        setAnchorEl(null);
-      };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
   return (
     <>
-    <AppBar open={open} position="fixed" style={{ background: '#2c3e50', border:'none', outline:'none'}}>
+      <AppBar
+        open={open}
+        position="fixed"
+        style={{ background: "#2c3e50", border: "none", outline: "none" }}
+      >
         <Toolbar>
-
-        <IconButton
+          <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
@@ -70,37 +86,80 @@ const NavBar:React.FC<NavBarProps>  = ({open, handleDrawerOpen}) => {
             <MenuIcon />
           </IconButton>
 
-          
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1, textAlign: 'center' }}>
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{ flexGrow: 1, textAlign: "center" }}
+          >
             Ticket Dashboard
           </Typography>
           <IconButton onClick={handleClick}>
             <Avatar alt="User Avatar" {...stringAvatar(`${name}`)} />
           </IconButton>
+
           <Menu
             anchorEl={anchorEl}
-            open={Boolean(anchorEl)}
+            id="account-menu"
+            open={openAccountMenu}
             onClose={handleClose}
-            anchorOrigin={{
-              vertical: 'bottom',
-              horizontal: 'right',
+            onClick={handleClose}
+            PaperProps={{
+              elevation: 0,
+              sx: {
+                overflow: "visible",
+                filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                mt: 1.5,
+                "& .MuiAvatar-root": {
+                  width: 32,
+                  height: 32,
+                  ml: -0.5,
+                  mr: 1,
+                },
+                "&::before": {
+                  content: '""',
+                  display: "block",
+                  position: "absolute",
+                  top: 0,
+                  right: 14,
+                  width: 10,
+                  height: 10,
+                  bgcolor: "background.paper",
+                  transform: "translateY(-50%) rotate(45deg)",
+                  zIndex: 0,
+                },
+              },
             }}
-            transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
-            }}
-            // getContentAnchorEl={null}
+            transformOrigin={{ horizontal: "right", vertical: "top" }}
+            anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            <MenuItem onClick={handleProfile}>Profile</MenuItem>
-            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Avatar /> Profile
+            </MenuItem>
+            <MenuItem onClick={handleClose}>
+              <Avatar /> My account
+            </MenuItem>
+            <Divider />
+            <MenuItem onClick={handleClose}>
+              <ListItemIcon>
+                <Settings fontSize="small" />
+              </ListItemIcon>
+              Settings
+            </MenuItem>
+            <MenuItem onClick={handleLogout}>
+              <ListItemIcon>
+                <Logout fontSize="small" />
+              </ListItemIcon>
+              Logout
+            </MenuItem>
           </Menu>
+
+          
         </Toolbar>
       </AppBar>
-      </>
-  )
-}
+    </>
+  );
+};
 
-export default NavBar
-
+export default NavBar;
 
 

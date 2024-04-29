@@ -11,6 +11,7 @@ interface TicketTableProps {
 const TicketTable: React.FC<TicketTableProps> = ({ status, ticketWidth }) => {
   // const [isModalOpen, setIsModalOpen] = useState(false);
   const tickets = useAppSelector((state) => state.ticket.ticket)
+  const filteredTickets = useAppSelector(state => state.ticket.filteredTickets)
   
 
   // const handleOpenModal = () => {
@@ -23,13 +24,13 @@ const TicketTable: React.FC<TicketTableProps> = ({ status, ticketWidth }) => {
 
   function getStatusColor(status: string) {
     switch (status.toLowerCase()) {
-      case "new":
+      case "todo":
         return "bg-blue-500"; // Blue for new status
-      case "in_progress":
+      case "progress":
         return "bg-yellow-500"; // Yellow for in-progress status
-      case "completed":
+      case "done":
         return "bg-green-500"; // Green for completed status
-      case "rejected":
+      case "cancelled":
         return "bg-red-500"; // Red for rejected status
       default:
         return "bg-gray-500"; // Default color for unknown status
@@ -118,7 +119,33 @@ const TicketTable: React.FC<TicketTableProps> = ({ status, ticketWidth }) => {
           <AddIcon sx={{ color: "black" }} />
         </Button> */}
 
-        {tickets?.map((ticket, index) =>
+        {filteredTickets ? filteredTickets?.map((ticket, index) =>
+          ticket.status.toLowerCase() === status.toLowerCase() ? (
+            <Draggable
+              key={ticket.id.toString()}
+              draggableId={ticket.id.toString()}
+              index={index}
+            >
+              {(provided) => (
+                <Box
+                  key={index}
+                  className="mt-6"
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    boxShadow: "2px 2px 4px rgba(0, 0, 0, 0.2)",
+                    ...provided.draggableProps.style,
+                  }}
+                  {...provided.draggableProps}
+                  {...provided.dragHandleProps}
+                  ref={provided.innerRef}
+                >
+                  <Ticket ticket={ticket} ticketWidth={ticketWidth} />
+                </Box>
+              )}
+            </Draggable>
+          ) : null
+        ):tickets?.map((ticket, index) =>
           ticket.status.toLowerCase() === status.toLowerCase() ? (
             <Draggable
               key={ticket.id.toString()}

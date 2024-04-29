@@ -29,12 +29,12 @@ const Ticket:React.FC<TicketProps>=({ticket, ticketWidth})=> {
     year: 'numeric'
   });
   // console.log(formattedDate)
-  const dateTime = new Date(ticket.due_date);
-  const formattedTime = dateTime.toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true 
-  });
+  // const dateTime = new Date(ticket.due_date);
+  // const formattedTime = dateTime.toLocaleTimeString('en-US', {
+  //   hour: 'numeric',
+  //   minute: 'numeric',
+  //   hour12: true 
+  // });
   
   // console.log(formattedTime);
   function getPriorityColor(priority:string) {
@@ -63,9 +63,9 @@ const Ticket:React.FC<TicketProps>=({ticket, ticketWidth})=> {
           <span className={`${getPriorityColor(ticket.priority)}`}>{ticket.priority}</span>
           {formattedDate}
         </Typography>
-        <Typography sx={{fontSize:10, textAlign:'end', display:'flex', justifyContent:'flex-end'}} color="text.secondary">
+        {/* <Typography sx={{fontSize:10, textAlign:'end', display:'flex', justifyContent:'flex-end'}} color="text.secondary">
          {formattedTime}
-        </Typography>
+        </Typography> */}
         </CardContent>
     </Card>
  

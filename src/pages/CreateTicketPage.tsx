@@ -12,7 +12,7 @@ interface Ticket {
 }
 
 const priorities = ['LOW', 'MEDIUM', 'HIGH'];
-const statuses = ['NEW', 'IN_PROGRESS', 'COMPLETED', 'REJECTED'];
+const statuses = ["TODO", "PROGRESS", "DONE", "CANCELLED"];
 
 const CreateTicketPage: React.FC<{ isOpen: boolean; onClose: () => void }> = ({  isOpen, onClose }) => {
   const dispatch = useAppDispatch();
@@ -20,7 +20,7 @@ const CreateTicketPage: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
     title: '',
     description: '',
     priority: 'LOW',
-    status: "NEW",
+    status: "TODO",
     due_date: ''
   });
 

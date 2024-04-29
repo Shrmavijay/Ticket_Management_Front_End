@@ -512,7 +512,7 @@ import MyfetchMiddleWare from "../utils/api";
 import * as Yup from "yup"; // Import Yup
 import './registrationform.css'
 import { useState } from "react";
-import Loader from "../utils/Loader";
+import Loader from "../utils/LoginLoader";
 
 const registrationValidationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -544,7 +544,7 @@ export default function RegisterForm() {
         const userData = {
           method: "POST",
           endPoint: "api/users",
-          options: { ...values },
+          options: { data: {...values} },
         };
         const response = await MyfetchMiddleWare(userData);
         

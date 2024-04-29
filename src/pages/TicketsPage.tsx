@@ -13,6 +13,8 @@ import { updateTickets } from "../app/Slice/TicketSlice";
 import AddIcon from "@mui/icons-material/Add";
 import CreateTicketPage from "./CreateTicketPage";
 import MyfetchMiddleWare from "../utils/api";
+import GetDataloader from "../utils/GetDataloader";
+import FilterOptions from "../utils/FilterMenu";
 
 
 interface TicketsPage {
@@ -21,14 +23,20 @@ interface TicketsPage {
 }
 const TicketsPage: React.FC<TicketsPage> = ({ sectionName, ticketWidth }) => {
   const dispatch = useAppDispatch();
-  // const status = ["TODO", "PROGRESS", "COMPLETED", "CANCEL"];
-  const status = ["NEW", "IN_PROGRESS", "COMPLETED", "REJECTED"]
+  const status = ["TODO", "PROGRESS", "DONE", "CANCELLED"];
+  // const status = ["NEW", "IN_PROGRESS", "COMPLETED", "REJECTED"]
+  const isLoading = useAppSelector(state=>state.ticket.isLoading)
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [anchorEl, setAnchorEl] =      useState<null | HTMLElement>(null);
+  const [byUsers, setByUsers] = useState("");
+  const [byPriority, setByPriority] = useState("");
+
 
   // const [isOpen, setIsOpen] = useState(false);
 
   const tickets = useAppSelector((state) => state.ticket.ticket);
 
+//Drag and Drop Result
   const handleOnDragEnd = (result: DropResult) => {
     console.log("drag result: ", result);
     if (!result.destination) {
@@ -88,9 +96,8 @@ const TicketsPage: React.FC<TicketsPage> = ({ sectionName, ticketWidth }) => {
   //   setIsOpen(false);
   // };
 
-  const handleFilter = () => {
-    console.log("hello");
-    // handleOpen();
+  const openFilterMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
   };
 
   //   return (
@@ -165,7 +172,7 @@ const TicketsPage: React.FC<TicketsPage> = ({ sectionName, ticketWidth }) => {
           </span>
           <div className="flex">
         
-            <Button onClick={handleOpenModal}  style={{marginRight:"20px",display:"flex"}}>
+            <Button onClick={handleOpenModal}  style={{marginRight:"5px",display:"flex"}}>
               <AddIcon sx={{alignSelf:'center'}}></AddIcon>
             </Button>
           <div style={{display: 'flex'}}>
@@ -184,7 +191,7 @@ const TicketsPage: React.FC<TicketsPage> = ({ sectionName, ticketWidth }) => {
           >
             <Button
               variant="outlined"
-              onClick={handleFilter}
+              onClick={openFilterMenu}
               size="small"
               sx={{ color: "black" }}
             >
@@ -192,13 +199,14 @@ const TicketsPage: React.FC<TicketsPage> = ({ sectionName, ticketWidth }) => {
               Filter
             </Button>
           </Card>
+          <FilterOptions anchorEl={anchorEl} setByPriority={setByPriority} byPriority={byPriority} setByUsers={setByUsers} byUsers={byUsers} setAnchorEl={setAnchorEl} tickets={tickets}/>
       
           </div>
           </div>
           
         </div>
         <div className="flex gap-2 mt-7 justify-between">
-          {status.map((status: string, index: React.Key | null | undefined) => (
+          { !isLoading ? status.map((status: string, index: React.Key | null | undefined) => (
             <Droppable key={index} droppableId={`${status}`}>
               {(provided) => (
                 <div ref={provided.innerRef} {...provided.droppableProps}>
@@ -211,7 +219,7 @@ const TicketsPage: React.FC<TicketsPage> = ({ sectionName, ticketWidth }) => {
                 </div>
               )}
             </Droppable>
-          ))}
+          )): <GetDataloader />}
         </div>
       </DragDropContext>
       <Dialog open={isModalOpen} onClose={handleCloseModal}>
@@ -227,7 +235,6 @@ const TicketsPage: React.FC<TicketsPage> = ({ sectionName, ticketWidth }) => {
 };
 
 export default TicketsPage;
-
 
 
 
