@@ -92,7 +92,8 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
 
   const handleFilter = (e: any)=>{
     const filteredTickets = tickets.filter((ticket)=>{
-      return ticket.priority == e.target.value
+      console.log(e.target.value)
+      return ticket.priority.toLowerCase() == e.target.value
     })
     dispatch(filterTickets(filteredTickets))
   }
@@ -117,7 +118,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
 
   // },[isChecked,isSelected])
 
-  console.log("Radio", )
+  // console.log("Radio", )
 
   return (
     <Menu
@@ -167,7 +168,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
           <FormControl
             onChange={(e) => {
               setByPriority(e.target.value);
-              // handleFilter(e);
+              handleFilter(e);
             }}
           >
             <RadioGroup
@@ -196,7 +197,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
         </AccordionSummary>
         <AccordionDetails></AccordionDetails>
       </Accordion> */}
-      <Accordion
+      {/* <Accordion
         expanded={expanded === "panel3"}
         onChange={toggleMenu("panel3")}
       >
@@ -225,7 +226,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
             );
           })}
         </AccordionDetails>
-      </Accordion>
+      </Accordion> */}
       <MenuItem
         onClick={() => {
           setByPriority("")
