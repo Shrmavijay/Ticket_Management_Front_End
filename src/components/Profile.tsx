@@ -23,6 +23,7 @@ const UserProfileDialog: React.FC<UserProfileDialogProps> = ({
 }) => {
   const [showChangePassword, setShowChangePassword] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const name = localStorage.getItem("name");
 
   const handlePasswordChange = () => {
     setShowChangePassword(true);
@@ -62,7 +63,7 @@ const UserProfileDialog: React.FC<UserProfileDialogProps> = ({
             >
               <Avatar
                 alt="User Avatar"
-                {...stringAvatar(`vijay`)}
+                {...stringAvatar(`${name}`)}
                 sx={{ width: "150px", height: "150px", fontSize: "5rem" }}
               />
               <div style={{ marginLeft: "1rem" }}>
