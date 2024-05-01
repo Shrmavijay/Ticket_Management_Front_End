@@ -6,8 +6,6 @@ export interface RequestOptions extends AxiosRequestConfig {
   method?: Method | string;
   options?: any;
 }
-const token = String(localStorage.getItem('token'))
-const id = Number(localStorage.getItem('id'))
 
 
 async function MyfetchMiddleWare({
