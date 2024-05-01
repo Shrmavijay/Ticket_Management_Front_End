@@ -3,19 +3,10 @@ import axios from "axios";
 import environment from "../../Constant";
 
 const baseURL = `${environment.baseUrl}`;
-// export let user_id: any;
 
-// if (localStorage.getItem("id") !== null) {
-//   user_id = localStorage.getItem("id");
-// }
-
-// const id = parseInt(user_id);
-// console.log(id);
-
-// Initial State interface
 export interface ticketState {
   userId?: number;
-  users?: string[];
+  users: any[];
   authToken?: string;
   isLoading: boolean;
   ticket: any[];
@@ -46,10 +37,32 @@ export const createTicket = createAsyncThunk(
         },
       }
     );
-    console.log("create ticket response : ", res.data.data);
+    // console.log("create ticket response : ", res.data.data);
     return res.data.data;
   }
 );
+
+//changePassword
+
+export const updatePass = createAsyncThunk('updatePassword',
+  async (passwords: any) => {
+    const token = localStorage.getItem("token");
+    const user_id = localStorage.getItem('id')
+    const oldPassword = passwords.currentPassword
+    const newPassword = passwords.updatedPass
+    // console.log(passwords)
+    const res = await axios.put(
+      `${baseURL}/api/users/${user_id}`,
+      {oldPassword,newPassword},
+      {
+        headers: {
+          authorization: token,
+        },
+      }
+    );
+    // console.log("axios response : ", res);
+    return res;
+})
 
 // Fetch Tickets
 export const getdata = createAsyncThunk("ticket", async () => {
@@ -59,7 +72,7 @@ export const getdata = createAsyncThunk("ticket", async () => {
       authorization: token,
     },
   });
-  console.log(res.data);
+  // console.log(res.data);
   return res.data;
 });
 
@@ -82,7 +95,7 @@ export const editTicket = createAsyncThunk(
         },
       }
     );
-    console.log("axios response : ", res.data.data);
+    // console.log("axios response : ", res.data.data);
     return rearragedList ? rearragedList : res.data.data;
   }
 );
@@ -131,9 +144,6 @@ export const TicketSlic = createSlice({
     updateTickets(state,{payload}){
 
       state.error = null;
-      // if (Array.isArray(payload)) {
-        // state.ticket = payload;
-      // } else {
         state.ticket = state.ticket?.map((ticket) =>
         ticket.id === payload.id ? payload : ticket
         )
@@ -144,20 +154,23 @@ export const TicketSlic = createSlice({
       return state
     }
   },
-  // toggleSelection(state:any,{payload}: any){
-  //   state.users.map((user: any)=>{
-  //     if(user.name == payload.name){
-  //       user.isSelected = payload.isSelected
-  //     }
-  //     return user
-  //   })
-  //   return state
+  // toggleSelection(state:any,action: any){
+    // state.users.map((user: any)=>{
+    //   if(user.name == payload.name){
+    //     user.isSelected = payload.isSelected
+    //   }
+    //   return user
+    // })
+    // return state
   // },
-  // Extra reducers
+
+
+
+ // Extra reducers
   extraReducers(builder) {
     builder
       .addCase(loginUser.fulfilled, (state, { payload }: any) => {
-        console.log("login response data: ", payload);
+        // console.log("login response data: ", payload);
         state.ticket = payload;
         return state;
       })

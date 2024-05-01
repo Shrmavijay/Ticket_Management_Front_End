@@ -9,15 +9,18 @@ export const registrationValidationSchema = Yup.object({
       "Invalid email address"
     )
     .required("Email is required"),
+
   password: Yup.string()
     .required("Password is required")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
       "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, and one number"
     ),
+
   confirmPassword: Yup.string()
     .required("Confirm Password is required")
     .oneOf([Yup.ref("password"), ""], "Passwords must match"),
+
 });
 
 export const loginValidationSchema = Yup.object({
@@ -28,12 +31,31 @@ export const loginValidationSchema = Yup.object({
       "Invalid email address"
     )
     .required("Email is required"),
-    password: Yup.string()
+  password: Yup.string()
     .required("Password is required")
     .matches(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
       "Password must contain at least 8 characters, one uppercase letter, one lowercase letter, and one number"
     )
-  });
+});
+
+export const updatePasswordSchema = Yup.object({
+  oldPassword: Yup.string()
+    .required("Old Password is required")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/," "
+    ),
+  newPassword: Yup.string()
+    .required("Password is required")
+    .matches(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/," "
+    )
+    .notOneOf([Yup.ref("oldPassword"), " "], "Passwords cannot be same")
+    ,
+  confirmNewPassword: Yup.string()
+    .required("Confirm Password is required")
+    .oneOf([Yup.ref("newPassword"), ""], "Passwords must match")
+
+})
 
 

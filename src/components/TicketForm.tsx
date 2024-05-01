@@ -2,6 +2,9 @@ import { TextField, Card, CardContent, CardActions, Button, MenuItem } from '@mu
 import { useAppDispatch } from '../hooks';
 import { deleteTicket, editTicket } from '../app/Slice/TicketSlice';
 import { useState } from 'react';
+import Swal from 'sweetalert2';
+import './TicketForm.css'
+import CloseIcon from '@mui/icons-material/Close';
 
 
 
@@ -14,12 +17,13 @@ export interface Ticket {
   due_date: string;
 }
 interface ticketFormProps{
+  handleCloseModal:any,
     tickets: Ticket
 }
 const priorities = ['LOW', 'MEDIUM', 'HIGH'];
 const statuses = ["TODO", "PROGRESS", "DONE", "CANCELLED"];
 
-const TicketForm: React.FC<ticketFormProps> = ({tickets}) => {
+const TicketForm: React.FC<ticketFormProps> = ({tickets,handleCloseModal}) => {
 
   const dispatch = useAppDispatch()
   const [ticket,setTicket] = useState<Ticket>({...tickets})
@@ -38,8 +42,28 @@ const TicketForm: React.FC<ticketFormProps> = ({tickets}) => {
   };
 
   const handleDelete = () => {
-    dispatch(deleteTicket(ticket.id))
-    console.log('Delete ticket:', ticket);
+    handleCloseModal()
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+      
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "Deleted!",
+          text: "Your ticket has been deleted.",
+          icon: "success",
+        });
+        dispatch(deleteTicket(ticket.id))
+      }
+    });
+    
+    // console.log('Delete ticket:', ticket);
   };
 
   const handleSave = () => {
@@ -49,13 +73,16 @@ const TicketForm: React.FC<ticketFormProps> = ({tickets}) => {
   };
 
   const handleCancel = () => {
-    console.log('Cancel edit');
+    // console.log('Cancel edit');
     setIsEditMode(false);
 
   };
 
   return (
-    <Card sx={{ maxWidth: 471 }}>
+    <Card sx={{ maxWidth: 600, display:'flex',overflow:"scroll", flexDirection:"column" }}>
+      <span onClick={handleCloseModal} style={{alignSelf: 'flex-end',cursor:"pointer"}}>
+      <CloseIcon fontSize="medium" />
+      </span>
       <CardContent>
         <TextField
           fullWidth
@@ -74,8 +101,10 @@ const TicketForm: React.FC<ticketFormProps> = ({tickets}) => {
           onChange={handleChange}
           margin="normal"
           multiline
+          rows={4}
           disabled={!isEditMode}
         />
+        
         <TextField
           select
           fullWidth
@@ -113,7 +142,7 @@ const TicketForm: React.FC<ticketFormProps> = ({tickets}) => {
           label="Due Date"
           name="due_date"
           type="datetime-local"
-          value={ticket.due_date.replace('Z', '')} // Remove 'Z' to display in local time
+          value={ticket.due_date.replace('Z', '')} 
           onChange={handleChange}
           margin="normal"
           disabled={!isEditMode}

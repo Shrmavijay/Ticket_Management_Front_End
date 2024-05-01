@@ -15,7 +15,8 @@ import { useAppDispatch } from "../hooks";
 import { logoutUser } from "../app/Slice/TicketSlice";
 import MenuIcon from "@mui/icons-material/Menu";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
-import { Settings, Logout } from "@mui/icons-material";
+import { Logout } from "@mui/icons-material";
+import UserProfileDialog from "./Profile";
 const drawerWidth = 240;
 
 interface NavBarProps {
@@ -49,6 +50,7 @@ const NavBar: React.FC<NavBarProps> = ({ open, handleDrawerOpen }) => {
   const name = localStorage.getItem("name");
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
     const openAccountMenu = Boolean(anchorEl);
+    const [openProfile, setOpenProfile] = useState(false)
 
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -61,9 +63,9 @@ const NavBar: React.FC<NavBarProps> = ({ open, handleDrawerOpen }) => {
     window.location.reload();
   };
 
-  // const handleProfile = () => {
-  //   handleClose();
-  // };
+  const handleProfile = () => {
+    setOpenProfile(true)
+  };
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -96,7 +98,7 @@ const NavBar: React.FC<NavBarProps> = ({ open, handleDrawerOpen }) => {
           <IconButton onClick={handleClick}>
             <Avatar alt="User Avatar" {...stringAvatar(`${name}`)} />
           </IconButton>
-
+          
           <Menu
             anchorEl={anchorEl}
             id="account-menu"
@@ -132,19 +134,19 @@ const NavBar: React.FC<NavBarProps> = ({ open, handleDrawerOpen }) => {
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
           >
-            <MenuItem onClick={handleClose}>
+            {/* <MenuItem onClick={handleClose}>
               <Avatar /> Profile
-            </MenuItem>
-            <MenuItem onClick={handleClose}>
-              <Avatar /> My account
+            </MenuItem> */}
+            <MenuItem onClick={handleProfile}>
+              <Avatar /> My Profile
             </MenuItem>
             <Divider />
-            <MenuItem onClick={handleClose}>
+            {/* <MenuItem onClick={handleClose}>
               <ListItemIcon>
                 <Settings fontSize="small" />
               </ListItemIcon>
               Settings
-            </MenuItem>
+            </MenuItem> */}
             <MenuItem onClick={handleLogout}>
               <ListItemIcon>
                 <Logout fontSize="small" />
@@ -152,8 +154,7 @@ const NavBar: React.FC<NavBarProps> = ({ open, handleDrawerOpen }) => {
               Logout
             </MenuItem>
           </Menu>
-
-          
+          <UserProfileDialog handleClose={()=>setOpenProfile(false)} openProfile={openProfile} />
         </Toolbar>
       </AppBar>
     </>

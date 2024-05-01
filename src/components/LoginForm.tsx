@@ -8,30 +8,20 @@ import * as React from "react";
 import { useNavigate } from "react-router-dom";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-// import { createTheme } from "@mui/material/styles";
-import { Formik } from "formik";
+import {  Formik } from "formik";
 import MyfetchMiddleWare from "../utils/api";
-import * as Yup from "yup";
 import "./loginform.css";
 import { useState } from "react";
 import Loader from "../utils/LoginLoader";
+import { loginValidationSchema } from "../utils/validationSchema";
 
-const registrationValidationSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.string()
-    .min(8, "Password must be at least 8 characters")
-    .required("Password is required"),
-});
-
-// const defaultTheme = createTheme();
-// interface LoginFormProps {
-//   checkLogin: any;
-// }
 const LoginForm: React.FC<LoginFormProps> = ({ checkLogin }) => {
   const [isLogin, setIsLogin] = useState(false);
   const navigate = useNavigate();
+  const [errorMessage, setErrorMessage] = useState("")
 
   const handleLogin = async (values: any, actions: any) => {
+    setErrorMessage("")
     setIsLogin(true)
     try {
       if (values) {
@@ -41,28 +31,22 @@ const LoginForm: React.FC<LoginFormProps> = ({ checkLogin }) => {
           options: { data: {...values} },
         };
         const response = await MyfetchMiddleWare(userData);
-        console.log(response, "response");
+        // console.log(response, "response");
         if (response.status === 200) {
           localStorage.setItem("token", response.data.data.tokens);
           localStorage.setItem("name", response.data.data.name);
           localStorage.setItem("id", response.data.data.id);
-          console.log("Token set");
+          // console.log("Token set");
           actions.resetForm();
           checkLogin();
           navigate("/");
           setIsLogin(false)
         }
       } else {
-        console.log(Error);
+        // console.log(Error);
       }
     } catch (error: any) {
-      // Swal.fire({
-      //   position: "center",
-      //   icon: "error",
-      //   title: error,
-      //   showConfirmButton: false,
-      //   timer: 2500,
-      // });
+      setErrorMessage("Invalid Credentials")
     }
   };
 
@@ -73,7 +57,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ checkLogin }) => {
           email: "",
           password: "",
         }}
-        validationSchema={registrationValidationSchema}
+        validationSchema={loginValidationSchema}
         onSubmit={handleLogin}
       >
         {({ errors, touched, handleSubmit, handleChange, handleBlur }) => (
@@ -95,9 +79,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ checkLogin }) => {
                 style={{ visibility: "hidden" }}
               />
               <div className=" errors" style={{ visibility: "hidden" }}>
-                {/* {errors. && touched.name ? (
+                {/* {errors.name && touched.name ? (
                 <span className="text-red-500">{errors.name}</span>
               ): null} */}
+              {errorMessage}
               </div>
               <label htmlFor="email">Email Address</label>
               <input

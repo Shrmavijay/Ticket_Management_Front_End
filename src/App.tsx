@@ -14,7 +14,7 @@ function App() {
   const checkLogin = async()=>{
     const token = localStorage.getItem('token')
     if(token!==null && token!=='null'){
-      console.log(localStorage.getItem('token'))
+      // console.log(localStorage.getItem('token'))
       setIsLogin(true)
       dispatch(getdata())
       // await MyfetchMiddleWare({endPoint:'api/tickets'})

@@ -24,7 +24,7 @@ const CreateTicketPage: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
     due_date: ''
   });
 
-  console.log("status in ticket creation: ",ticket.status)
+  // console.log("status in ticket creation: ",ticket.status)
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -36,12 +36,10 @@ const CreateTicketPage: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
 
   const handleCreateTicket = async() => {
     
-    console.log("userID: ", localStorage.getItem('id'))
+    // console.log("userID: ", localStorage.getItem('id'))
     const id = localStorage.getItem('id')
     const user_id = Number(id)
     dispatch(createTicket({...ticket,user_id}));
-    // await MyfetchMiddleWare({method:'post',endPoint: 'api/tickets/create',options:{data:ticket}})
-    // Clear form fields after creating ticket
     setTicket({
       title: '',
       description: '',
@@ -54,7 +52,7 @@ const CreateTicketPage: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
 
   return (
     <Modal open={isOpen} onClose={onClose}>
-      <Card sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 471 }}>
+      <Card sx={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: 600 }}>
         <CardContent>
           <TextField
             fullWidth
@@ -72,6 +70,7 @@ const CreateTicketPage: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
             onChange={handleChange}
             margin="normal"
             multiline
+            rows={4}
           />
           <TextField
             select
@@ -107,7 +106,7 @@ const CreateTicketPage: React.FC<{ isOpen: boolean; onClose: () => void }> = ({ 
             fullWidth
             label="Due Date"
             name="due_date"
-            type="datetime-local"
+            type="date"
             value={ticket.due_date}
             onChange={handleChange}
             margin="normal"

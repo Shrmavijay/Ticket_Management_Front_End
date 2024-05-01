@@ -15,7 +15,7 @@ async function MyfetchMiddleWare({
   method = "get" as Method,
   options,
 }: RequestOptions): Promise<AxiosResponse | any> {
-  console.log("method:", method, "url:", endPoint, "options:", options);
+  // console.log("method:", method, "url:", endPoint, "options:", options);
   const methods: Method[] = ["get", "post", "put", "patch", "delete"];
 
   // const APIBase: string = `${environment.IP_ADDRESS}:${environment.SERVER_PORT}`;
@@ -25,7 +25,7 @@ async function MyfetchMiddleWare({
     "content-type": "application/json", // Corrected content type
     // aurthorization: token
   };
-  console.log('user_ID: ', id, 'token: ', token)
+  // console.log('user_ID: ', id, 'token: ', token)
 
   const CommonBody: Record<string, any> = {
     // userID: id,
@@ -48,7 +48,7 @@ async function MyfetchMiddleWare({
             config?: AxiosRequestHeaders
           ) => Promise<AxiosResponse>
         )(baseUrl, options.data,options.headers);
-        console.log("Response: ", responseData);
+        // console.log("Response: ", responseData);
         return responseData;
       } catch (error) {
         console.error("Error:", error);

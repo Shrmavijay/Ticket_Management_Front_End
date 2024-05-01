@@ -28,15 +28,6 @@ const Ticket:React.FC<TicketProps>=({ticket, ticketWidth})=> {
     month: 'long',
     year: 'numeric'
   });
-  // console.log(formattedDate)
-  // const dateTime = new Date(ticket.due_date);
-  // const formattedTime = dateTime.toLocaleTimeString('en-US', {
-  //   hour: 'numeric',
-  //   minute: 'numeric',
-  //   hour12: true 
-  // });
-  
-  // console.log(formattedTime);
   function getPriorityColor(priority:string) {
     switch (priority.toLowerCase()) {
       case 'low':
@@ -51,26 +42,24 @@ const Ticket:React.FC<TicketProps>=({ticket, ticketWidth})=> {
   }
  return (
   <>
-    <Card sx={{ width: ticketWidth, minHeight:100, cursor:"pointer" }} onClick={handleClick}>
+    <Card sx={{ width: ticketWidth, minHeight:100, cursor:"pointer", boxShadow: "0 30px 30px -25px rgba(65, 51, 183, 0.25)"}} onClick={handleClick}>
       <CardContent sx={{mt:0}}>
-        <Typography sx={{ fontSize: 10}} color="text.secondary" gutterBottom>
+        <Typography sx={{ fontSize: 12}} color="text.secondary" gutterBottom>
           {`#${ticket.id}-${ticket.title}`}
         </Typography>
-        <Typography variant="h6" component="div" fontSize={13}>
+        <Typography variant="h6" component="div" fontSize={14}>
           {`${ticket.description}`}
         </Typography>
-        <Typography sx={{fontSize:10, textAlign:'end', display:'flex', justifyContent:'space-between'}} color="text.secondary">
-          <span className={`${getPriorityColor(ticket.priority)}`}>{ticket.priority}</span>
+        <Typography sx={{fontSize:11, textAlign:'end', display:'flex',marginTop: 2, justifyContent:'space-between'}} color="text.secondary">
+          <span style={{fontWeight: 700}} className={`${getPriorityColor(ticket.priority)}`}>{ticket.priority}</span>
           {formattedDate}
         </Typography>
-        {/* <Typography sx={{fontSize:10, textAlign:'end', display:'flex', justifyContent:'flex-end'}} color="text.secondary">
-         {formattedTime}
-        </Typography> */}
+        
         </CardContent>
     </Card>
  
-         <Dialog open={isModalOpen} onClose={handleCloseModal}>
-         <TicketForm tickets={ticket}/> 
+         <Dialog open={isModalOpen} onClose={handleCloseModal} >
+         <TicketForm tickets={ticket} handleCloseModal={handleCloseModal}/> 
       </Dialog>
         </>
   );

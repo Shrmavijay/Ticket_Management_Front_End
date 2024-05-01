@@ -36,10 +36,7 @@ const AccordionSummary = styled((props: AccordionSummaryProps) => (
     {...props}
   />
 ))(({ theme }) => ({
-  //   backgroundColor:
-  //     theme.palette.mode === "dark"
-  //       ? "rgba(255, 255, 255, .05)"
-  //       : "rgba(0, 0, 0, .03)",
+ 
   padding: "0px 8px",
   flexDirection: "row",
   "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
@@ -63,6 +60,8 @@ interface FilterOptionsProps {
   anchorEl: null | HTMLElement;
   setAnchorEl: any;
   tickets: any[];
+  isChecked:Boolean
+  setIschecked: any
 }
 
 const FilterOptions: React.FC<FilterOptionsProps> = ({
@@ -75,7 +74,7 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const [expanded, setExpanded] = useState<string | false>("panel1");
-  // const users = useAppSelector((state) => state.ticket.users);
+
   const toggleMenu =
     (panel: string) => (_event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false);
@@ -88,36 +87,20 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
     setAnchorEl(null);
   };
 
-  const handleFilter = (e: any)=>{
+  const handleFilter = (e: any):void=>{
     const filteredTickets = tickets.filter((ticket)=>{
-      console.log(e.target.value)
-      return ticket.priority.toLowerCase() == e.target.value
+      setByPriority(e.target.value)
+      const filterTickets = ticket.priority.toLowerCase() === e.target.value  
+      return filterTickets;
     })
     dispatch(filterTickets(filteredTickets))
   }
 
-  // React.useEffect(()=>{
-  //   debugger;
-  //   if(isChecked || isSelected){
-  //     const filteredTickets = tickets.filter((ticket: { priority: string }) => {
-  //       let shouldExist = true
-  //       if(isChecked && ticket.user_id != isChecked){
-  //         shouldExist = false
-  //       }
-  //       if(isSelected && ticket.priority.toLowerCase() != isSelected){
-  //         shouldExist = false
-  //       }
-  //       return shouldExist
-  //     });
-  //     dispatch(filterTickets(filteredTickets));
-  //   }else{
-  //     dispatch(filterTickets(tickets));
-  //   }
+  // const filterByUsers = (event: any)=>{
+  //   setByUsers(event.target.value)
+  // }
 
-  // },[isChecked,isSelected])
-
-  // console.log("Radio", )
-
+  
   return (
     <Menu
       anchorEl={anchorEl}
@@ -165,7 +148,6 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
         <AccordionDetails>
           <FormControl
             onChange={(e) => {
-              // setByPriority(e.target.value);
               handleFilter(e);
             }}
           >
@@ -186,45 +168,6 @@ const FilterOptions: React.FC<FilterOptionsProps> = ({
           </FormControl>
         </AccordionDetails>
       </Accordion>
-      {/* <Accordion
-        expanded={expanded === "panel2"}
-        onChange={toggleMenu("panel2")}
-      >
-        <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
-          <Typography>By Date</Typography>
-        </AccordionSummary>
-        <AccordionDetails></AccordionDetails>
-      </Accordion> */}
-      {/* <Accordion
-        expanded={expanded === "panel3"}
-        onChange={toggleMenu("panel3")}
-      >
-        <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
-          <Typography>By Users</Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          {users?.map((user) => {
-            return (
-              <FormGroup
-                key={user.id}
-                onChange={(e) => {
-                  debugger;
-                  // setByUsers(isChecked == user.id ? "" : user.id);
-                  setByUsers(e.target.value)
-                  dispatch(toggleSelection({name:e.target.value, isSelected:e.target.checked}))
-                  // handleFilter(e, user.id);
-                }}
-              >
-                <FormControlLabel
-                  control={<Checkbox />}
-                  label={`${user.name}`}
-                  value={user.name}
-                />
-              </FormGroup>
-            );
-          })}
-        </AccordionDetails>
-      </Accordion> */}
       <MenuItem
         onClick={() => {
           setByPriority("")
