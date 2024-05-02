@@ -45,7 +45,7 @@ const UserProfileDialog: React.FC<UserProfileDialogProps> = ({
           sx={{
             outline: "1px solid rgb(0, 0, 0, 0.1)",
             background: "linear-gradient(to bottom, #161f28, transparent 735%)",
-            color: "#64787f",
+            color: "white",
             boxShadow: "0 30px 30px -25px rgba(65, 51, 183, 0.25)",
           }}
         >
