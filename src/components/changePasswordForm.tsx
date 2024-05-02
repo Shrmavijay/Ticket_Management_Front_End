@@ -19,24 +19,32 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
 }) => {
   const dispatch = useAppDispatch();
   const [isSubmit, SetIsSubmit] = useState(false);
+
+  // update password handler
+
   const handleSubmitChange = async (values: any) => {
+    setSuccessMessage("");
     SetIsSubmit(true);
     const { oldPassword, newPassword } = values.target;
     const currentPassword = oldPassword.value;
     const updatedPass = newPassword.value;
-    const response = await dispatch(
-      updatePass({ currentPassword, updatedPass })
-    );
-    // console.log(response);
-    if (response.meta.requestStatus == "fulfilled") {
-      setShowChangePassword(false);
-      setSuccessMessage("Password changed successfully");
-      setTimeout(() => {
-        setSuccessMessage("");
-      }, 3000);
+    if (currentPassword && updatedPass) {
+      const response = await dispatch(
+        updatePass({ currentPassword, updatedPass })
+      );
+      // console.log(response);
+      if (response.meta.requestStatus == "fulfilled") {
+        setShowChangePassword(false);
+        setSuccessMessage("Password changed successfully");
+        setTimeout(() => {
+          setSuccessMessage("");
+        }, 3000);
+      } else {
+        SetIsSubmit(false);
+        setSuccessMessage("Invalid Credentials");
+      }
     } else {
-      SetIsSubmit(false);
-      setSuccessMessage("Invalid Credentials");
+      setSuccessMessage("Please fill all the fields");
     }
   };
 
@@ -203,7 +211,10 @@ const ChangePasswordForm: React.FC<ChangePasswordFormProps> = ({
                   {isSubmit ? <Loader /> : "Submit"}
                 </Button>
                 <Button
-                  onClick={() => setShowChangePassword(false)}
+                  onClick={() => {
+                    setSuccessMessage("");
+                    setShowChangePassword(false);
+                  }}
                   sx={{ width: "225px" }}
                 >
                   Cancel
